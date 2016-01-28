@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<!--
+	Eventually by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Sign Up Page</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<style>
+		.div_layout
+		{
+			position: absolute;
+			margin-bottom: auto;
+			margin-left: 30%;
+			margin-right: 30%;
+			width: 40%;
+			padding: 0px;
+			text-align: center;
+		}
+
+		.form_layout
+		{
+			margin-left: 10%;
+			margin-right: 90%;
+			width: 60%;
+			text-align: center;
+		}
+
+		.input_submit_layout
+		{
+			margin-left: 10%;	
+			margin-right: 70%;
+			width: 95%;
+			text-align: : center;
+		}
+
+		.center
+		{
+			margin-left: auto;
+			margin-right: auto;
+			width: 580px;
+			padding: 0px;
+			text-align: center;
+		}
+		</style>
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header class="center" id="header">
+				<h1>Sign Up Form</h1>
+			</header>
+
+		<!-- Signup Form -->
+		<div class="div_layout">
+			<form style="display:block" class="form_layout" id="signup-form" method="post" action="#">
+				<br>
+				<input class="input_submit_layout" type="text" name="first name" id="first name" placeholder="First Name" />
+				<br>
+                <input class="input_submit_layout" type="text" name="last name" id="last name" placeholder="Last Name" />
+                <br>
+                <input class="input_submit_layout" type="email" name="email" id="email" placeholder="Email Address" />
+                <br>
+                <input class="input_submit_layout" type="password" name="password" id="password" placeholder="Password" />
+                <br>
+                <input class="input_submit_layout" type="password" name="re-enter_password" id="re-enter_password" placeholder="Re-enter Password" />
+                <br>
+                <input class="input_submit_layout" type="text" name="birthday" id="birthday" placeholder="Birthday (Optional)" />
+                <br>
+                <input class="input_submit_layout" type="text" name="gender" id="gender" placeholder="Gender (Optinal)" />
+                <br>
+                <input class="input_submit_layout" type="text" name="university" id="univerisity" placeholder="Current University (Optional)" />
+                <br>
+                <input class="input_submit_layout" type="text" name="major" id="major" placeholder="Current Major (Optional)" />
+                <br>
+                <input class="input_submit_layout" type="text" name="newmajor" id="newmajor" placeholder="Major you want to apply (Optional)" />
+                <br>
+				<input class="input_submit_layout" type="submit" value="Sign Up" onclick="event.preventDefault(); window.location='User.html';"/>
+			</form>
+		</div>
+
+		
+
+		<!-- Scripts -->
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/user.js"></script>
+
+	</body>
+</html>
