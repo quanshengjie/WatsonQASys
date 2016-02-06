@@ -137,33 +137,6 @@
 					$message.classList.remove('visible');
 				};
 
-			// Events.
-			// Note: If you're *not* using AJAX, get rid of this event listener.
-				$form.addEventListener('submit', function(event) {
-
-					event.stopPropagation();
-					event.preventDefault();
-
-					var $question = document.getElementById("question");
-					var $answer = document.getElementById("answer");
-					if($question.value == "When is the deadline for CSE master program?")
-					{
-						$answer.value = "January 31st";
-					}
-					else if($question.value == "What is the address of CSE Department?")
-					{
-						$answer.value = "395 Dreese Laboratories 2015 Neil Avenue Columbus, OH 43210-1277";
-					}
-					else if($question.value == "Based on my profile, what master program fits me best?")
-					{
-						$answer.value = "The Computer Science & Engineering requires a GPA of 3.0. Each candidate is required to pursue a program of study in courses approved by his/her academic advisor. Students in the thesis track need to complete 20 graded cr-hrs. Students in the non-thesis track need to complete 30 graded cr-hrs, or 24 graded cr-hrs and a masters project.";
-					}
-					else
-					{
-						$answer.value = "I don't know";
-					}
-
-				});
 
 		})();
 

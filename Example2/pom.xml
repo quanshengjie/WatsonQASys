@@ -27,5 +27,6 @@
   </dependencies>
   <build>
     <finalName>Example2</finalName>
+    <sourceDirectory>${basedir}/src</sourceDirectory>
   </build>
 </project>
