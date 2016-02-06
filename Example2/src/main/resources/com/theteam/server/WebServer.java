@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Bob
  */
-public class Bob extends HttpServlet {
+public class WebServer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String message;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Bob() {
+    public WebServer() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,7 +30,7 @@ public class Bob extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		// Set response content type
+		// Set response content typec
 		response.setContentType("text/html");
 		
 		// Actual logic goes here.
