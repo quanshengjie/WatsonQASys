@@ -5,7 +5,7 @@
 */
 
 var xmlobj;
-var tempAnswer;
+var $answer;
 
 (function() {
 
@@ -148,7 +148,7 @@ var tempAnswer;
 					event.preventDefault();
 
 					var $question = document.getElementById("question");
-					var $answer = document.getElementById("answer");
+					$answer = document.getElementById("answer");
 					/*
 					if($question.value == "When is the deadline for CSE master program?")
 					{
@@ -173,8 +173,7 @@ var tempAnswer;
 					xmlobj.onreadystatechange=GetAnswer;
 					xmlobj.setRequestHeader("type","Q&A");
 					xmlobj.setRequestHeader("question",$question.value);
-					xmlobj.send(null);
-					$answer.value=tempAnswer;
+					xmlobj.send("");
 				});
 
 		})();
@@ -197,6 +196,6 @@ function GetAnswer()
 {
 	if(xmlobj.readyState==4 && xmlobj.status==200)
 	{
-		tempAnswer=xmlobj.responseText;
+		$answer.value=xmlobj.responseText;
 	}
 }

@@ -50,15 +50,24 @@ public class Watson implements QuestionAnswerSystem
 			conn.setRequestProperty("accept", "application/json");
 			conn.setRequestProperty("X-SyncTimeout", "30");
 			conn.setDoOutput(true);
+			System.out.println("Packing finished at: " + System.nanoTime());
 			conn.getOutputStream().write(postDataBytes);
+			System.out.println("Retrive raw ans at: " + System.nanoTime());
 
 			Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+			System.out.println("Converted to type Reader at: " + System.nanoTime());
 			String result = "";
-			int length = 0;
-			for ( int c = in.read(); c != -1; c = in.read() )
-			{
-				result += (char)c;
-			}
+			StringBuilder builder = new StringBuilder();
+			int charsRead = -1;
+			char[] chars = new char[5000];
+			do{
+			    charsRead = in.read(chars,0,chars.length);
+			    //if we have valid chars, append them to end of string.
+			    if(charsRead>0)
+			        builder.append(chars,0,charsRead);
+			}while(charsRead>0);
+			result = builder.toString();
+			System.out.println("Finishing extracting raw ans at: " + System.nanoTime());
 			return result;
 		}
 
@@ -73,6 +82,11 @@ public class Watson implements QuestionAnswerSystem
 	
 	public String GetAnswer(String question)
 	{
-		return ParseJsonAndReturnFirst.parse(requestWatsonForAns(question));
+		System.out.println("Send to Watson at: " + System.nanoTime());
+		String rawAns = requestWatsonForAns(question);
+		System.out.println("Hear from Watson at: " + System.nanoTime());
+		String ans = ParseJsonAndReturnFirst.parse(rawAns);
+		System.out.println("Parse finished at: " + System.nanoTime());
+		return ans;
 	}
 }
