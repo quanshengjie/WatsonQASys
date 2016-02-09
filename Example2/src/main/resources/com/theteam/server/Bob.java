@@ -1,10 +1,15 @@
 package com.theteam.server;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Bob implements QuestionAnswerSystem
 {
+	private HashMap<String, String> cheatSheet = new HashMap<Integer, String>();
+	
 	public void Init()
 	{
-		
+		cheatSheet.put("", value)
 	}
 	
 	public String GetAnswer(String question)
