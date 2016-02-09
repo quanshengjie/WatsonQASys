@@ -4,6 +4,9 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+var xmlobj;
+var tempAnswer;
+
 (function() {
 
 	"use strict";
@@ -146,6 +149,7 @@
 
 					var $question = document.getElementById("question");
 					var $answer = document.getElementById("answer");
+					/*
 					if($question.value == "When is the deadline for CSE master program?")
 					{
 						$answer.value = "January 31st";
@@ -162,9 +166,37 @@
 					{
 						$answer.value = "I don't know";
 					}
-
+					*/
+					CreateXMLHttpRequest();
+					var parm="question1="+$question.value+"&question="+$question.value;
+					xmlobj.open("POST","WebServer",true);
+					xmlobj.onreadystatechange=GetAnswer;
+					xmlobj.setRequestHeader("type","Q&A");
+					xmlobj.setRequestHeader("question",$question.value);
+					xmlobj.send(null);
+					$answer.value=tempAnswer;
 				});
 
 		})();
 
 })();
+
+function CreateXMLHttpRequest()
+{
+	if(window.ActiveXObject)
+	{
+		xmlobj=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	else
+	{
+		xmlobj=new XMLHttpRequest();
+	}
+}
+
+function GetAnswer()
+{
+	if(xmlobj.readyState==4 && xmlobj.status==200)
+	{
+		tempAnswer=xmlobj.responseText;
+	}
+}
