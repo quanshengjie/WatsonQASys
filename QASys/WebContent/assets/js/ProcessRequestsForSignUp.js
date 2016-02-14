@@ -93,13 +93,13 @@ function GetFeedback()
 	if(xmlobj.readyState==4 && xmlobj.status==200)
 	{
 		var response=xmlobj.responseText;
-		if(response=="This email address has been registered!")
+		if(response=="false")
 		{
-			alter(response);
+			alert("This email address has been registered!");
 		}
-		else
+		else if(response=="true")
 		{
-			alert(response);
+			alert("Success!");
 			var url="index.html?email="+email.value;
 			window.location.assign(url);
 		}
