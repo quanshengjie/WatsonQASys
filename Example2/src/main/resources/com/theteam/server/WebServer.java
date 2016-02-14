@@ -43,6 +43,10 @@ public class WebServer extends HttpServlet {
     	{
     		ProcessSignUp(request,response);
     	}
+    	else if(type != null && type.equals("login"))
+    	{
+    		ProcessLogIn(request, response);
+    	}
 	}
     
     private void ProcessAsk(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -89,11 +93,39 @@ public class WebServer extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		if(isExist)
 		{
-			out.println("This email address has been registered!");
+			out.print("false");
 		}
 		else
 		{
-			out.println("Success!");
+			users.add(user);
+			out.print("true");
+		}
+    }
+    
+    private void ProcessLogIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+    	String email=request.getHeader("email");
+    	String pwd=request.getHeader("pwd");
+    	
+    	boolean isVerified=false;
+    	Iterator<UserInformation> iterator=users.iterator();
+		while(iterator.hasNext())
+		{
+			UserInformation element=iterator.next();
+			if(element.email.equals(email) && element.pwd.equals(pwd))
+			{
+				isVerified=true;
+			}
+		}
+		
+		PrintWriter out=response.getWriter();
+		if(isVerified)
+		{
+			out.print("true");
+		}
+		else
+		{
+			out.print("false");
 		}
     }
     
