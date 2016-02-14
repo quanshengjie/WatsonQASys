@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class WebServer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private QuestionAnswerSystem qas = new Watson();
+	private ArrayList<UserInformation> users=new ArrayList<UserInformation>();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -34,13 +35,17 @@ public class WebServer extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String type=request.getHeader("type");
-    	if(type != null && type.equals("Q&A"))
+    	if(type != null && type.equals("ask"))
     	{
-    		ProcessQuestionAndAnswer(request,response);
+    		ProcessAsk(request,response);
+    	}
+    	else if(type != null && type.equals("signup"))
+    	{
+    		ProcessSignUp(request,response);
     	}
 	}
     
-    private void ProcessQuestionAndAnswer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    private void ProcessAsk(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String question=request.getHeader("question");
     	String answer="";
@@ -48,6 +53,48 @@ public class WebServer extends HttpServlet {
 		answer = qas.GetAnswer(question);
 		PrintWriter out=response.getWriter();
 		out.println(answer);
+    }
+    
+    private void ProcessSignUp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+    	UserInformation user=new UserInformation();
+    	user.fname=request.getHeader("fname");
+    	user.mname=request.getHeader("mname");
+    	user.lname=request.getHeader("lname");
+    	user.gender=request.getHeader("gender");
+    	user.email=request.getHeader("email");
+    	user.pwd=request.getHeader("pwd");
+    	user.confirmpwd=request.getHeader("comfirmpwd");
+    	user.month=request.getHeader("month");
+    	user.day=request.getHeader("day");
+    	user.year=request.getHeader("year");
+    	user.university=request.getHeader("university");
+    	user.major=request.getHeader("major");
+    	user.gpascale=request.getHeader("gpascale");
+    	user.cgpa=request.getHeader("gpa");
+    	user.mgpa=request.getHeader("mgpa");
+    	user.program=request.getHeader("program");
+    	
+    	boolean isExist=false;
+    	Iterator<UserInformation> iterator=users.iterator();
+		while(iterator.hasNext())
+		{
+			UserInformation element=iterator.next();
+			if(element.email.equals(user.email))
+			{
+				isExist=true;
+			}
+		}
+		
+		PrintWriter out=response.getWriter();
+		if(isExist)
+		{
+			out.println("This email address has been registered!");
+		}
+		else
+		{
+			out.println("Success!");
+		}
     }
     
     private void sendBytes(FileInputStream fis, OutputStream out)
