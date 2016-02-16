@@ -30,6 +30,14 @@ public class WebServer extends HttpServlet {
 	{
 	    // Do required initialization
 	    qas.Init();
+	    
+	    //*************************************
+	    // Test User
+	    UserInformation user=new UserInformation();
+    	user.email="1";
+    	user.pwd="1";
+    	users.add(user);
+	    //*************************************
 	}
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
