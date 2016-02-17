@@ -2,7 +2,7 @@ var xmlobj;
 var question;
 var answer;
 var hasUser;
-var user;
+var email;
 
 function CreateXMLHttpRequest()
 {
@@ -47,7 +47,7 @@ function Load()
 	if(temp!=null)
 	{
 		hasUser=true;
-		user=temp.split("=")[1];
+		email=temp.split("=")[1];
 	}
 	else
 	{
@@ -58,11 +58,21 @@ function Load()
 	{
 		document.getElementById("login").style.display="none";
 		document.getElementById("signup").style.display="none";
-		document.getElementById("aboutus").href="aboutus.html?email="+user;
+		document.getElementById("aboutus").href="aboutus.html?email="+email;
+		document.getElementById("usernav").style.display="block";
+		document.getElementById("username").innerHTML=email;
 	}
 	else
 	{
 		document.getElementById("login").style.display="inline-block";
 		document.getElementById("signup").style.display="inline-block";
+		document.getElementById("aboutus").href="aboutus.html";
+		document.getElementById("usernav").style.display="none";
 	}
 }
+
+document.getElementById("logout").addEventListener('click',function(event)
+{
+	hasUser=false;
+	window.location.assign("index.html");
+});
