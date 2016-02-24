@@ -4,28 +4,40 @@ import java.sql.*;
 import java.util.*;
 
 public class Database {
-	private Connection c;
+	private Connection c = null;
 	
-	public void connection()
+	private void connection()
 	{
-		c = null;
-	    try {
-	      Class.forName("org.sqlite.JDBC");
-	      c = DriverManager.getConnection("jdbc:sqlite:QA.db");
-	    } catch ( Exception e ) {
-	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	      System.exit(0);
+	    try 
+	    {
+	    	Class.forName("org.sqlite.JDBC");
+	    	c = DriverManager.getConnection("jdbc:sqlite:QA.db");
+	    	System.out.println("Opened database successfully");
+	    } 
+	    catch ( Exception e ) 
+	    {
+	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    	System.exit(0);
 	    }
-	    System.out.println("Opened database successfully");
 	}
 	
-	public void disconnect()
+	private void disconnection()
 	{
-		c.close();
+		try 
+		{
+			c.close();
+		    System.out.println("Close database successfully");
+		} 
+		catch ( Exception e ) 
+		{
+		    System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    System.exit(0);
+		}
 	}
 	
 	public void createTable(String sql)
 	{
+		connection();
 	    Statement stmt = null;
 	    try 
 	    {
@@ -38,10 +50,12 @@ public class Database {
 	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	    	System.exit(0);
 	    }
+	    disconnection();
 	}
 	
 	public void insert(String sql)
 	{
+		connection();
 		Statement stmt = null;
 	    try 
 	    {
@@ -56,10 +70,12 @@ public class Database {
 	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	    	System.exit(0);
 	    }
+	    disconnection();
 	}
 	
-	public ArrayList<UserInformation> selectFromUsers(String sql)
+	public ArrayList<UserInformation> selectFromUsersTable(String sql)
 	{
+		connection();
 	    Statement stmt = null;
 	    
 	    try 
@@ -98,10 +114,12 @@ public class Database {
 	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	    	System.exit(0);
 	    }
+	    disconnection();
 	}
 	
 	public ArrayList<QA> selectFromQATable(String sql)
 	{
+		connection();
 	    Statement stmt = null;
 	    
 	    try 
@@ -127,10 +145,12 @@ public class Database {
 	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	    	System.exit(0);
 	    }
+	    disconnection();
 	}
 	
 	public ArrayList<WebLink> selectFromWebLinkTable(String sql)
 	{
+		connection();
 	    Statement stmt = null;
 	    
 	    try 
@@ -156,5 +176,48 @@ public class Database {
 	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	    	System.exit(0);
 	    }
+	    disconnection();
+	}
+	
+	public void update(String sql)
+	{
+		connection();
+		Statement stmt = null;
+		
+		try 
+		{
+		    stmt = c.createStatement();
+		    stmt.executeUpdate(sql);
+		    c.commit();
+		    stmt.close();
+		    System.out.println("Update operation done successfully");
+		} 
+		catch ( Exception e ) 
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    System.exit(0);
+		}
+		disconnection();
+	}
+	
+	public void delete(String sql)
+	{
+		connection();
+		Statement stmt = null;
+		
+		try 
+		{
+		    stmt = c.createStatement();
+		    stmt.executeUpdate(sql);
+		    c.commit();
+		    stmt.close();
+		    System.out.println("Delete operation done successfully");
+		} 
+		catch ( Exception e ) 
+		{
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		    System.exit(0);
+		}
+		disconnection();
 	}
 }
