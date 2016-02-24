@@ -17,6 +17,7 @@ public class WebServer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private QuestionAnswerSystem qas = new Watson();
 	private ArrayList<UserInformation> users=new ArrayList<UserInformation>();
+	private Database database;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,6 +31,8 @@ public class WebServer extends HttpServlet {
 	{
 	    // Do required initialization
 	    qas.Init();
+	    
+	    Database database = new Database();
 	    
 	    //*************************************
 	    // Test User
@@ -69,22 +72,22 @@ public class WebServer extends HttpServlet {
     
     private void ProcessSignUp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	UserInformation user=new UserInformation();
-    	user.fname=request.getHeader("fname");
-    	user.mname=request.getHeader("mname");
-    	user.lname=request.getHeader("lname");
-    	user.gender=request.getHeader("gender");
-    	user.email=request.getHeader("email");
-    	user.pwd=request.getHeader("pwd");
-    	user.confirmpwd=request.getHeader("comfirmpwd");
-    	user.month=request.getHeader("month");
-    	user.day=request.getHeader("day");
-    	user.year=request.getHeader("year");
-    	user.university=request.getHeader("university");
-    	user.major=request.getHeader("major");
-    	user.gpascale=request.getHeader("gpascale");
-    	user.cgpa=request.getHeader("gpa");
-    	user.mgpa=request.getHeader("mgpa");
+    	UserInformation user = new UserInformation();
+    	user.fname = request.getHeader("fname");
+    	user.mname = request.getHeader("mname");
+    	user.lname = request.getHeader("lname");
+    	user.gender = request.getHeader("gender");
+    	user.email = request.getHeader("email");
+    	user.pwd = request.getHeader("pwd");
+    	user.confirmpwd = request.getHeader("comfirmpwd");
+    	user.month = Integer.parseInt(request.getHeader("month"));
+    	user.day = Integer.parseInt(request.getHeader("day"));
+    	user.year = Integer.parseInt(request.getHeader("year"));
+    	user.university = request.getHeader("university");
+    	user.major = request.getHeader("major");
+    	user.gpascale = Float.parseFloat(request.getHeader("gpascale"));
+    	user.cgpa = Float.parseFloat(request.getHeader("gpa"));
+    	user.mgpa = Float.parseFloat(request.getHeader("mgpa"));
     	user.program=request.getHeader("program");
     	
     	boolean isExist=false;

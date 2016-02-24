@@ -1,4 +1,5 @@
 package com.theteam.server;
+
 public class UserInformation {
 	public String fname=null;
 	public String mname=null;
@@ -7,13 +8,13 @@ public class UserInformation {
 	public String email=null;
 	public String pwd=null;
 	public String confirmpwd=null;
-	public String month=null;
-	public String day=null;
-	public String year=null;
+	public int month=null;
+	public int day=null;
+	public int year=null;
 	public String university=null;
 	public String major=null;
-	public String gpascale=null;
-	public String cgpa=null;
-	public String mgpa=null;
+	public float gpascale=null;
+	public float cgpa=null;
+	public float mgpa=null;
 	public String program=null;
 }
