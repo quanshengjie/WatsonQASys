@@ -35,7 +35,7 @@ public class WatsonGetAnswerId implements AnswerIdManager
 			String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
 
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-			conn.setRequestMethod("POST");
+			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "Basic " + encoding);
 			conn.setRequestProperty("content-type", "application/json");
 			conn.setRequestProperty("accept", "application/json");
@@ -43,7 +43,6 @@ public class WatsonGetAnswerId implements AnswerIdManager
 			conn.setDoOutput(true);
 
 			Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-			System.out.println("Converted to type Reader at: " + System.nanoTime());
 			String result = "";
 			StringBuilder builder = new StringBuilder();
 			int charsRead = -1;
@@ -55,7 +54,6 @@ public class WatsonGetAnswerId implements AnswerIdManager
 			        builder.append(chars,0,charsRead);
 			}while(charsRead>0);
 			result = builder.toString();
-			System.out.println("Finishing extracting raw ans at: " + System.nanoTime());
 			return result;
 		}
 
