@@ -11,9 +11,19 @@
 		<description></description>
 		<servlet-class>com.theteam.server.WebServer</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>LoginServer</servlet-name>
+		<display-name>LoginServer</display-name>
+		<description>Manage Login requests</description>
+		<servlet-class>com.theteam.server.LoginServer</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>WebServer</servlet-name>
 		<url-pattern>/WebServer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServer</servlet-name>
+		<url-pattern>/LoginServer</url-pattern>
 	</servlet-mapping>
 </web-app>
