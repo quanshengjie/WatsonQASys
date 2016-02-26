@@ -1,7 +1,7 @@
 package com.theteam.server;
 import com.google.gson.*;
 
-public class ParseJsonAndReturnFirst
+public class ParseWatsonQAJsonAndReturnFirst
 {
 	public static String parse(String jsonLine)
 	{
@@ -19,4 +19,5 @@ public class ParseJsonAndReturnFirst
 	    String result = jobject.get("text").getAsString();
 	    return result;
 	}
+
 }

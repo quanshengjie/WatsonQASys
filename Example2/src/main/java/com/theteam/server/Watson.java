@@ -85,7 +85,7 @@ public class Watson implements QuestionAnswerSystem
 		System.out.println("Send to Watson at: " + System.nanoTime());
 		String rawAns = requestWatsonForAns(question);
 		System.out.println("Hear from Watson at: " + System.nanoTime());
-		String ans = ParseJsonAndReturnFirst.parse(rawAns);
+		String ans = ParseWatsonQAJsonAndReturnFirst.parse(rawAns);
 		System.out.println("Parse finished at: " + System.nanoTime());
 		return ans;
 	}
