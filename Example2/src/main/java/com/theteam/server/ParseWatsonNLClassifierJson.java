@@ -9,7 +9,7 @@ public class ParseWatsonNLClassifierJson
 	{
 	    JsonElement jelement = new JsonParser().parse(jsonLine);
 	    JsonObject  jobject = jelement.getAsJsonObject();
-	    JsonArray jarray = jobject.getAsJsonObject("classes");
+	    JsonArray jarray = jobject.getAsJsonArray("classes");
 	    int i = 0;
 	    jobject = jarray.get(i).getAsJsonObject();
 	    while(jobject.get("class_name") == null)
@@ -27,13 +27,13 @@ public class ParseWatsonNLClassifierJson
 		confidence.clear();
 	    JsonElement jelement = new JsonParser().parse(jsonLine);
 	    JsonObject  jobject = jelement.getAsJsonObject();
-	    JsonArray jarray = jobject.getAsJsonObject("classes");
+	    JsonArray jarray = jobject.getAsJsonArray("classes");
 	    int i = 0;
 	    while(i < jarray.size())
 	    {
 	    	jobject = jarray.get(i).getAsJsonObject();
-	    	String name = jobject.get("class_name");
-	    	String confidenceStr = jobject.get("confidence");
+	    	String name = jobject.get("class_name").getAsString();
+	    	String confidenceStr = jobject.get("confidence").getAsString();
 	    	if(name != null && confidenceStr != null)
 	    	{
 	    		classes.add(name.trim());
