@@ -2,16 +2,77 @@ package com.theteam.server;
 
 import java.sql.*;
 import java.util.*;
+import java.io.*;
 
 public class Database {
 	private Connection c = null;
+	private static boolean first = true;
+	
+	public Database()
+	{
+		first = false;
+		if(first)
+		{
+			String sql;
+			/*
+			first = false;
+			sql = "CREATE TABLE USERS " +
+					"(fname		TEXT		NOT NULL," +
+					" mname		TEXT		," +
+					" lname		TEXT		NOT NULL," +
+					" gender 	CHAR(10)	NOT NULL," +
+					" email 	CHAR(50) PRIMARY KEY	NOT NULL," +
+					" pwd		CHAR(50)	NOT NULL," +
+					" confirmpwd	CHAR(50)	NOT NULL," +
+					" month		INT			," +
+					" day		INT			," +
+					" year		INT			," +
+					" university	CHAR(50)	," +
+					" major		CHAR(50)	," +
+					" gpascale	REAL		NOT NULL," +
+					" cgpa		REAL		NOT NULL," +
+					" mgpa		REAL		NOT NULL," +
+					" program	REAL		NOT NULL)";
+			createTable(sql);
+			
+			sql = "CREATE TABLE QATable " +
+	                "(email CHAR(50) PRIMARY KEY     NOT NULL," +
+	                " question           TEXT    NOT NULL, " + 
+	                " answer            TEXT     NOT NULL)";
+			createTable(sql);
+			*/
+			sql = "CREATE TABLE WebLink " + 
+					"(id CHAR(1024) PRIMARY KEY     NOT NULL," +
+	                " link            CHAR(1024)     NOT NULL)";
+			createTable(sql);
+			
+			String urlList = "/home/yihan/Documents/CSE5914/WorkSpace/Example2/src/main/java/com/theteam/server/urlList.txt";
+			try
+			{
+				FileReader fileReader = new FileReader(urlList);
+				BufferedReader bufferedReader = new BufferedReader(fileReader);
+				while(bufferedReader.ready())
+				{
+					String line = bufferedReader.readLine();
+					String elements[] = line.split(" ");
+					sql = "INSERT INTO WebLink (id,link) " +
+	                   "VALUES ('" + elements[0] + "' , '" + elements[2] + "' );"; 
+					insert(sql);
+				}
+			}
+			catch(IOException e)
+			{
+				System.out.println(e);
+			}
+		}
+	}
 	
 	private void connection()
 	{
 	    try 
 	    {
 	    	Class.forName("org.sqlite.JDBC");
-	    	c = DriverManager.getConnection("jdbc:sqlite:QA.db");
+	    	c = DriverManager.getConnection("jdbc:sqlite:QA.sqlite");
 	    	System.out.println("Opened database successfully");
 	    } 
 	    catch ( Exception e ) 
@@ -35,7 +96,7 @@ public class Database {
 		}
 	}
 	
-	public void createTable(String sql)
+	private void createTable(String sql)
 	{
 		connection();
 	    Statement stmt = null;
@@ -100,9 +161,9 @@ public class Database {
 	    		user.year = rs.getInt("year");
 	    		user.university = rs.getString("university");
 	    		user.major = rs.getString("major");
-	    		user.gpascale = rs.getString("gapscale");
-	    		user.cgpa = rs.getString("cgpa");
-	    		user.mgpa = rs.getString("mgpa");
+	    		user.gpascale = Float.parseFloat(rs.getString("gpascale"));
+	    		user.cgpa = Float.parseFloat(rs.getString("cgpa"));
+	    		user.mgpa = Float.parseFloat(rs.getString("mgpa"));
 	    		user.program = rs.getString("program");
 	    		users.add(user);
 	    	}
@@ -165,9 +226,8 @@ public class Database {
 	    	while ( rs.next() ) 
 	    	{
 	    		WebLink webLink = new WebLink();
-//	    		webLink.email = rs.getString("email");
-//	    		webLink.question = rs.getString("question");
-	    		webLink.answer = rs.getString("answer");
+	    		webLink.id = rs.getString("id");
+	    		webLink.link = rs.getString("link");
 	    		webLinks.add(webLink);
 	    	}
 	    	rs.close();
