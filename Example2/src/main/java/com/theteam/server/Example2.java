@@ -3,9 +3,9 @@ package com.theteam.server;
 public class Example2 {
 
 	public static void main(String[] args) {
-		QuestionAnswerSystem qasys = new Watson();
+		IQuestionAnswerSystem qasys = new Watson();
 		qasys.Init();
-		System.out.println(qasys.GetAnswer("What is ECE admission requirements?"));
+		System.out.println(qasys.GetAnswer("When is the deadline for Autumn 2016 undergraduate application?"));
 	}
 
 }

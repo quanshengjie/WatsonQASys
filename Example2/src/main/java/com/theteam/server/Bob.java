@@ -3,7 +3,7 @@ package com.theteam.server;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Bob implements QuestionAnswerSystem
+public class Bob implements IQuestionAnswerSystem
 {
 	private HashMap<String, String> cheatSheet = new HashMap<String, String>();
 	

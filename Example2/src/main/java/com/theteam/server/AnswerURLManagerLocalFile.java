@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @author shengjie
  *
  */
-public class AnswerURLManagerLocalFile implements AnswerURLManager {
+public class AnswerURLManagerLocalFile implements IAnswerURLManager {
 
 	private Map<String, String> idToUrlMap = new HashMap<String, String>();
 	private final String urlListPath = "/urlList.txt";
