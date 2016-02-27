@@ -22,6 +22,14 @@ function GetAnswer()
 		stopProgressBar();
 		var answer = document.getElementById("main_answer_div")
 		answer.innerHTML = xmlobj.responseText;
+		var contentArea = document.getElementById("content_area");
+		var rect = contentArea.getBoundingClientRect();
+		var contentHeight = window.innerHeight - rect.top - 80;
+		var actualHeight = $('#main_answer_div').height();
+		if(actualHeight > contentHeight)
+		{
+			scrollToInputFormTop();
+		}
 	}
 	else if(xmlobj.status != 200)
 	{

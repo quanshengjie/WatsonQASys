@@ -50,13 +50,13 @@
                     </li>                     
                 </ol>                 
             </div>             
-            <div class="form-center"> 
+            <div id="input_form" class="form-center"> 
                 <form role="form" class="clearfix">
                     <div class="">
                         <div class="form-group">
                             <div class="row" style="margin: auto;width: 80%;padding: 10px;">
                                 <div class=" crsa-selected col-md-10"> 
-                                    <input type="text" class="form-control pull-left" id="question" placeholder="Enter your question here..."> 
+                                    <input type="text" class="form-control pull-left" id="question" spellcheck="true" placeholder="Enter your question here..."> 
                                 </div>
                                 <div class="col-md-2">
                                     <button class="btn btn-primary" id="ask">Ask Watson!</button>                                     
@@ -82,8 +82,7 @@
 <!-- /.container -->         
 <!-- Bootstrap core JavaScript
 ================================================== -->         
-<!-- Placed at the end of the document so the pages load faster -->         
-<script src="assets/js/ProcessRequestsForIndex.js"></script>         
+<!-- Placed at the end of the document so the pages load faster -->               
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>         
 <script src="bootstrap/js/bootstrap.min.js"></script>         
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->         
@@ -104,7 +103,6 @@ var circle = new ProgressBar.Circle('#progressBar', {
 setContentAreaMinSize();
 $( window ).resize(setContentAreaMinSize);
 
-
 function setContentAreaMinSize()
 {
     var contentArea = document.getElementById("content_area");
@@ -117,6 +115,13 @@ function setContentAreaMinSize()
 }
 
 var progressBarStoped = false;
+
+function scrollToInputFormTop()
+{
+    $("body, html").animate({ 
+            scrollTop: $( "#input_form" ).offset().top 
+        }, 600);
+}
 
 function startProgressBar()
 {
@@ -156,4 +161,5 @@ function clearProgress() {
 }
 
 </script>
+<script src="assets/js/ProcessRequestsForIndex.js"></script>
 </html>
