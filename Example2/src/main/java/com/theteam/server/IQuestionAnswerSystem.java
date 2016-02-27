@@ -1,6 +1,6 @@
 package com.theteam.server;
 
-public interface QuestionAnswerSystem
+public interface IQuestionAnswerSystem
 {
 	void Init();
 	String GetAnswer(String question);
