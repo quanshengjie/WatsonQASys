@@ -5,9 +5,12 @@ package com.theteam.server;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
 
 /**
  * @author shengjie
@@ -16,7 +19,7 @@ import java.util.Scanner;
 public class AnswerURLManagerLocalFile implements IAnswerURLManager {
 
 	private Map<String, String> idToUrlMap = new HashMap<String, String>();
-	private final String urlListPath = "/urlList.txt";
+	private final String urlListPath = "urlList.txt";
 	
 	/* (non-Javadoc)
 	 * @see com.theteam.server.AnswerURLManager#GetURL(java.lang.String)
@@ -53,24 +56,24 @@ public class AnswerURLManagerLocalFile implements IAnswerURLManager {
 	 */
 	public void Init()
 	{
-		File file = new File(urlListPath);
-		if(!file.exists())
+//		File file = new File(urlListPath);
+//		if(!file.exists())
+//		{
+//			file = new File("src/main/resources/urlList.txt");
+//		}
+		InputStream fileStream = getClass().getResourceAsStream(urlListPath);
+		if(fileStream == null)
 		{
-			file = new File("src/main/resources/urlList.txt");
+			System.err.println("Cannot find the file");
+			return;
 		}
-		try {
+		Scanner sc = new Scanner(new InputStreamReader(fileStream));
 
-	        Scanner sc = new Scanner(file);
-
-	        while (sc.hasNextLine()) {
-	            String line = sc.nextLine();
-	            SplitAndStoreUrlListLine(line);
-	        }
-	        sc.close();
-	    } 
-	    catch (FileNotFoundException e) {
-	        e.printStackTrace();
-	    }
+		while (sc.hasNextLine()) {
+		    String line = sc.nextLine();
+		    SplitAndStoreUrlListLine(line);
+		}
+		sc.close();
 	}
 
 }
