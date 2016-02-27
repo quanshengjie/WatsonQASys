@@ -18,7 +18,7 @@ import java.util.Map;
  * @author shengjie
  *
  */
-public class WatsonGetAnswerId implements AnswerIdManager
+public class WatsonGetAnswerId implements IAnswerIdManager
 {
 	private String username = "5e088ca7-28e1-45e0-8e55-9929c7a71438";
 	private String password = "ESWUguQIskzH";
