@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class WebServer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private QuestionAnswerSystem qas = new Watson();
+	private IQuestionAnswerSystem qas = new Watson();
 	private ArrayList<UserInformation> users=new ArrayList<UserInformation>();
 	private Database database;
        

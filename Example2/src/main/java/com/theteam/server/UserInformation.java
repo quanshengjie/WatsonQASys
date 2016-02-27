@@ -8,13 +8,13 @@ public class UserInformation {
 	public String email=null;
 	public String pwd=null;
 	public String confirmpwd=null;
-	public int month=null;
-	public int day=null;
-	public int year=null;
+	public int month=0;
+	public int day=0;
+	public int year=0;
 	public String university=null;
 	public String major=null;
-	public float gpascale=null;
-	public float cgpa=null;
-	public float mgpa=null;
+	public float gpascale=0;
+	public float cgpa=0;
+	public float mgpa=0;
 	public String program=null;
 }

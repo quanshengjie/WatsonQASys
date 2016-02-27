@@ -75,6 +75,7 @@ public class Database {
 	
 	public ArrayList<UserInformation> selectFromUsersTable(String sql)
 	{
+		ArrayList<UserInformation> users = new ArrayList<UserInformation>();
 		connection();
 	    Statement stmt = null;
 	    
@@ -83,7 +84,6 @@ public class Database {
 	    	c.setAutoCommit(false);
 	    	stmt = c.createStatement();
 	    	ResultSet rs = stmt.executeQuery(sql);
-	    	ArrayList<UserInformation> users = new ArrayList<UserInformation>();
 	    	while ( rs.next() ) 
 	    	{
 	    		UserInformation user = new UserInformation();
@@ -99,9 +99,9 @@ public class Database {
 	    		user.year = rs.getInt("year");
 	    		user.university = rs.getString("university");
 	    		user.major = rs.getString("major");
-	    		user.gpascale = rs.getString("gapscale");
-	    		user.cgpa = rs.getString("cgpa");
-	    		user.mgpa = rs.getString("mgpa");
+	    		user.gpascale = Float.parseFloat(rs.getString("gapscale"));
+	    		user.cgpa = Float.parseFloat(rs.getString("cgpa"));
+	    		user.mgpa = Float.parseFloat(rs.getString("mgpa"));
 	    		user.program = rs.getString("program");
 	    		users.add(user);
 	    	}
@@ -115,10 +115,12 @@ public class Database {
 	    	System.exit(0);
 	    }
 	    disconnection();
+	    return users;
 	}
 	
-	public ArrayList<QA> selectFromQATable(String sql)
+	public ArrayList<QATable> selectFromQATable(String sql)
 	{
+		ArrayList<QATable> qas = new ArrayList<QATable>();
 		connection();
 	    Statement stmt = null;
 	    
@@ -127,10 +129,10 @@ public class Database {
 	    	c.setAutoCommit(false);
 	    	stmt = c.createStatement();
 	    	ResultSet rs = stmt.executeQuery(sql);
-	    	ArrayList<QA> qas = new ArrayList<QA>();
+	    	
 	    	while ( rs.next() ) 
 	    	{
-	    		QA qa = new QA();
+	    		QATable qa = new QATable();
 	    		qa.email = rs.getString("email");
 	    		qa.question = rs.getString("question");
 	    		qa.answer = rs.getString("answer");
@@ -146,10 +148,12 @@ public class Database {
 	    	System.exit(0);
 	    }
 	    disconnection();
+	    return qas;
 	}
 	
 	public ArrayList<WebLink> selectFromWebLinkTable(String sql)
 	{
+		ArrayList<WebLink> webLinks = new ArrayList<WebLink>();
 		connection();
 	    Statement stmt = null;
 	    
@@ -158,13 +162,12 @@ public class Database {
 	    	c.setAutoCommit(false);
 	    	stmt = c.createStatement();
 	    	ResultSet rs = stmt.executeQuery(sql);
-	    	ArrayList<WebLink> webLinks = new ArrayList<WebLink>();
+	    	
 	    	while ( rs.next() ) 
 	    	{
 	    		WebLink webLink = new WebLink();
-	    		webLink.email = rs.getString("email");
-	    		webLink.question = rs.getString("question");
-	    		webLink.answer = rs.getString("answer");
+	    		webLink.id = rs.getInt("id");
+	    		webLink.link = rs.getString("link");
 	    		webLinks.add(webLink);
 	    	}
 	    	rs.close();
@@ -177,6 +180,7 @@ public class Database {
 	    	System.exit(0);
 	    }
 	    disconnection();
+	    return webLinks;
 	}
 	
 	public void update(String sql)
