@@ -3,7 +3,7 @@ package com.theteam.server;
 public class AnswerURLManagerLocalFileTest extends AnswerURLManagerTest {
 
 	@Override
-	public AnswerURLManager GetInstance() {
+	public IAnswerURLManager GetInstance() {
 		return new AnswerURLManagerLocalFile();
 	}
 

@@ -6,9 +6,9 @@ import org.junit.Test;
 
 public abstract class AnswerURLManagerTest {
 
-	public abstract AnswerURLManager GetInstance();
+	public abstract IAnswerURLManager GetInstance();
 	
-	private AnswerURLManager instance = GetInstance();
+	private IAnswerURLManager instance = GetInstance();
 
 	@Test
 	public void test1() {
