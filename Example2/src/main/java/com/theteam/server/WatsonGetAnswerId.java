@@ -11,7 +11,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,7 +71,14 @@ public class WatsonGetAnswerId implements IAnswerIdManager
 	public String GetID(String ans)
 	{
 		String rawJson = requestWatsonForId(ans);
-		String id = ParseWatsonNLClassifierJson.parse(rawJson);
+		List<String> ids = new ArrayList<String>();
+		List<Double> confs = new ArrayList<Double>();
+		ParseWatsonNLClassifierJson.parse(rawJson, ids, confs);
+		String id = "-1";
+		if(confs.size() > 1 && confs.get(0) >= 0.707)
+		{
+			id = ids.get(0);
+		}
 		return id;
 	}
 }

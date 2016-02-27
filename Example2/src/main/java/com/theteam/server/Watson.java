@@ -133,7 +133,10 @@ public class Watson implements IQuestionAnswerSystem
 		result += "<span class=\"s1\">";
 		result +=  StringEscapeUtils.escapeHtml4(ans);
 		result += "</span>";
-		result += "<a href=\"" + url + "\" style=\"padding-left:20px\" target=\"_blank\">Read More</a>";
+		if(url != null)
+		{
+			result += "<a href=\"" + url + "\" style=\"padding-left:20px\" target=\"_blank\">Read More</a>";
+		}
 		result += "</p>\n";
 		return result;
 	}
