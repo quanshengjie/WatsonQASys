@@ -1,86 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>College Admission Q&A</title>
-        <!-- Bootstrap core CSS -->
-        <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-        <!-- Custom styles for this template -->
-        <link href="starter-template.css" rel="stylesheet">
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <meta name="description" content=""> 
+        <meta name="author" content=""> 
+        <title>College Admission Q&A</title>         
+        <!-- Bootstrap core CSS -->         
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet"> 
+        <!-- Custom styles for this template -->         
+        <link href="starter-template.css" rel="stylesheet"> 
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->         
         <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    </head>
-    <body class="" onload="Load()">
-        <div class="container">
-            <div class="starter-template">
-                <div class="dropdown navbar-text navbar-right" id="usernav">
-                    <p id="username">Username</p>
+    <![endif]-->         
+    </head>     
+    <body class="" onload="Load()"> 
+        <div class="container"> 
+            <div class="starter-template"> 
+                <div class="dropdown navbar-text navbar-right" id="usernav"> 
+                    <p id="username">Username</p> 
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Setting
-                        <span class="glyphicon glyphicon-align-right" aria-hidden="true"></span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="profile.html" id="profile">Profile</a>
-                        </li>
-                        <li>
-                            <a href="index.html" id="logout">Log out</a>
-                        </li>
-                    </ul>
-                </div>
-                <h2 class="text-info"><strong>College Admission Q&A System</strong></h2>
-                <img src="qa-icon.png" height="120" alt="logo" width="160" class="image-rounded" />
+                        <span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 
+                        <span class="caret"></span> 
+                    </button>                     
+                    <ul class="dropdown-menu"> 
+                        <li> 
+                            <a href="profile.html" id="profile">Profile</a> 
+                        </li>                         
+                        <li> 
+                            <a href="index.html" id="logout">Log out</a> 
+                        </li>                         
+                    </ul>                     
+                </div>                 
+                <h2 class="text-info"><strong>College Admission Q&A System</strong></h2> 
+                <img src="qa-icon.png" height="120" alt="logo" width="160" class="image-rounded" /> 
                 <ol class="breadcrumb"> 
                     <li class="active">Home</li>                     
-                    <li id="login" style="display:inline-block">
-                        <a href="login.html">Log In</a>
-                    </li>
-                    <li id="signup" style="display:inline-block">
-                        <a href="signup.html">Sign Up</a>
-                    </li>
-                    <li>
-                        <a id="aboutus" href="aboutus.html">About Us</a>
-                    </li>
-                </ol>
-            </div>
-            <div class="form-center">
-                <form role="form">
-                    <div class="form-group">
-                        <label class="col-md-2"></label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="question" placeholder="Enter your question here...">
+                    <li id="login" style="display:inline-block"> 
+                        <a href="login.html">Log In</a> 
+                    </li>                     
+                    <li id="signup" style="display:inline-block"> 
+                        <a href="signup.html">Sign Up</a> 
+                    </li>                     
+                    <li> 
+                        <a id="aboutus" href="aboutus.html">About Us</a> 
+                    </li>                     
+                </ol>                 
+            </div>             
+            <div class="form-center"> 
+                <form role="form" class="clearfix">
+                    <div class="">
+                        <div class="form-group">
+                            <div class="row" style="margin: auto;width: 80%;padding: 10px;">
+                                <div class=" crsa-selected col-md-10"> 
+                                    <input type="text" class="form-control pull-left" id="question" placeholder="Enter your question here..."> 
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary" id="ask">Ask Watson!</button>                                     
+                                </div>
+                            </div>                             
                         </div>
-                        <button class="btn btn-primary" id="ask">Ask Watson!</button>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <label class="col-md-2"></label>
-                        <div class="col-md-10">
-                            <textarea id="answer" style="overflow:scroll" cols="100" rows="10" placeholder="My answer is..."></textarea>
-                        </div>
-                    </div>
+                    </div>                     
+                    <br> 
                 </form>
-            </div>
-            <div class="footer">
-                <h5 class="text-center"><span class="glyphicon glyphicon-copyright-mark"></span>The Team<br>
-        Acknowledge to <strong>IBM</strong><span class="glyphicon glyphicon-registration-mark"></span><strong> Watson</strong></h5>
-            </div>
-        </div>
-        <!-- /.container -->
-        <!-- Bootstrap core JavaScript
-    ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="assets/js/ProcessRequestsForIndex.js"></script>
-        <script src="assets/js/jquery.min.js" class=""></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
-    </body>
+                <div id="content_area" class="" style="width:80%;margin: auto;min-height: 329px">
+                    <div id="progressBar" style="height: 100px; width:100px; margin: auto; display: none;">
+                    </div>
+                    <div  id="main_answer_div" class="container" style="width:100%">
+                    </div>
+                </div>                 
+            </div>             
+            <div class="footer"> 
+                <h5 class="text-center"><span class="glyphicon glyphicon-copyright-mark"></span>The Team<br> 
+        Acknowledge to <strong>IBM</strong><span class="glyphicon glyphicon-registration-mark"></span><strong> Watson</strong></h5> 
+            </div>             
+        </div>                
+    </body>     
+<!-- /.container -->         
+<!-- Bootstrap core JavaScript
+================================================== -->         
+<!-- Placed at the end of the document so the pages load faster -->         
+<script src="assets/js/ProcessRequestsForIndex.js"></script>         
+<script src="https://code.jquery.com/jquery-1.11.3.js"></script>         
+<script src="bootstrap/js/bootstrap.min.js"></script>         
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->         
+<script src="assets/js/ie10-viewport-bug-workaround.js"></script>    
+
+<script src="assets/js/progressbar.js"></script>    
+<script src="assets/js/progressbar.min.js"></script> 
+<script>
+var circle = new ProgressBar.Circle('#progressBar', {
+        color: '#555',
+        trailColor: '#eee',
+        strokeWidth: 10,
+        duration: 1000,
+        easing: 'easeInOut',
+        height: '10px'
+    });
+    
+setContentAreaMinSize();
+$( window ).resize(setContentAreaMinSize);
+
+
+function setContentAreaMinSize()
+{
+    var contentArea = document.getElementById("content_area");
+    var rect = contentArea.getBoundingClientRect();
+    var contentHeight = window.innerHeight - rect.top - 80;
+    if(contentHeight > 0)
+    {
+        contentArea.style.minHeight = contentHeight + "px";
+    }
+}
+
+var progressBarStoped = false;
+
+function startProgressBar()
+{
+    circle.set(0);
+    progressBarStoped = false;
+    var progressBar = document.getElementById("progressBar");
+    if(progressBar)
+    {
+        progressBar.style.display = "block"
+    }
+    fillProgress();
+}
+
+function stopProgressBar()
+{
+    progressBarStoped = true;
+    var progressBar = document.getElementById("progressBar");
+    if(progressBar)
+    {
+        progressBar.style.display = "none"
+    }
+}
+
+function fillProgress()
+{
+    if (!progressBarStoped)
+    {
+        circle.animate(1, clearProgress);
+    }
+}
+
+function clearProgress() {
+    if(!progressBarStoped)
+    {
+        circle.animate(0, fillProgress);
+    }
+}
+
+</script>
 </html>

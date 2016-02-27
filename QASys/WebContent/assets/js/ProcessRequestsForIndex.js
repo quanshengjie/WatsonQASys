@@ -1,6 +1,5 @@
 var xmlobj;
 var question;
-var answer;
 var hasUser;
 var email;
 
@@ -20,7 +19,13 @@ function GetAnswer()
 {
 	if(xmlobj.readyState==4 && xmlobj.status==200)
 	{
-		answer.value=xmlobj.responseText;
+		stopProgressBar();
+		var answer = document.getElementById("main_answer_div")
+		answer.innerHTML = xmlobj.responseText;
+	}
+	else if(xmlobj.status != 200)
+	{
+		alert("Server error: " + xmlobj.status);
 	}
 }
 
@@ -28,9 +33,11 @@ document.getElementById("ask").addEventListener('click',function(event)
 {
 	event.stopPropagation();
 	event.preventDefault();
+	var answer = document.getElementById("main_answer_div")
+	answer.innerHTML = "";
+	startProgressBar();
 	
 	question=document.getElementById("question");
-	answer=document.getElementById("answer");
 
 	CreateXMLHttpRequest();
 	xmlobj.open("POST","../Example2/WebServer",true);
