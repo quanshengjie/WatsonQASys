@@ -18,5 +18,13 @@ public class TestWatsonGetAnswerId {
 		IAnswerIdManager ins = CreateInstance();
 		assertEquals("5", ins.GetID(ans));
 	}
+	
+	@Test
+	public void test2() {
+		String ans = "This something irrelevant. Should give -1 in id.";
+		IAnswerIdManager ins = CreateInstance();
+		assertEquals("-1", ins.GetID(ans));
+	}
+
 
 }
