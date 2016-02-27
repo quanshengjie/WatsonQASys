@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 public class Watson implements IQuestionAnswerSystem
 {
@@ -160,19 +163,39 @@ public class Watson implements IQuestionAnswerSystem
 		return result;
 	}
 	
+	private boolean isHTMLBetterThanAnswer(String html)
+	{
+		boolean isBetter = false;
+		Document doc = Jsoup.parse(html);
+		Elements links = doc.select("a[href]");
+		Elements table = doc.select("table");
+		Elements tr = doc.select("tr");
+		Elements td = doc.select("td");
+		Elements ul = doc.select("ul");
+		Elements li = doc.select("li");
+		if(links.size() > 0 || table.size() > 0 || tr.size() > 0 
+		   || td.size() > 0 || ul.size() > 0 || li.size() > 0)
+		{
+			isBetter = true;
+		}
+		return isBetter;
+	}
+	
 	public String GetAnswer(String question)
 	{
 		String rawAns = requestWatsonForAns(question);
 		List<String> parseResult = ParseWatsonQAJsonAndReturnFirst.parse(rawAns);
 		String ans = parseResult.get(0);
-		if(ans.length() <= NORMAL_ANS_HTML_CRITICAL_LENGTH)
+		String html = requestWatsonForDocumentFragment(parseResult.get(1));
+		if(!isHTMLBetterThanAnswer(html) && ans.length() <= NORMAL_ANS_HTML_CRITICAL_LENGTH)
 		{
 			ans = WrapAnsToHTML(ans);
+			System.out.println("Return text of ans: " + parseResult.get(0));
 		}
 		else
-		{
-			String html = requestWatsonForDocumentFragment(parseResult.get(1));
+		{		
 			ans = WrapeDocumentFragmentToHTML(html, parseResult.get(1));
+			System.out.println("Return document fragment of ans: " + parseResult.get(0));
 		}
 		return ans;
 	}
