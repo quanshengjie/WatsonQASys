@@ -63,8 +63,12 @@ public class WebServer extends HttpServlet {
     {
     	String question=request.getHeader("question");
     	String answer="";
-    	
 		answer = qas.GetAnswer(question);
+		
+		String sql;
+		sql = "INSERT INTO QATable (email, question, answer) " + 
+				"VALUES ('";
+		
 		PrintWriter out=response.getWriter();
 		out.println(answer);
     }

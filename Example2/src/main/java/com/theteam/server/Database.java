@@ -72,7 +72,8 @@ public class Database {
 	    try 
 	    {
 	    	Class.forName("org.sqlite.JDBC");
-	    	c = DriverManager.getConnection("jdbc:sqlite:QA.sqlite");
+	    	String databaseLocation = getClass().getResource("QA.sqlite").toString();
+	    	c = DriverManager.getConnection("jdbc:sqlite:" + databaseLocation);
 	    	System.out.println("Opened database successfully");
 	    } 
 	    catch ( Exception e ) 
