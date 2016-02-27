@@ -7,7 +7,7 @@ package com.theteam.server;
  * @author shengjie
  *
  */
-public interface AnswerIdManager
+public interface IAnswerIdManager
 {
 	String GetID(String ans);
 }
