@@ -1,6 +1,6 @@
 package com.theteam.server;
 
-public interface AnswerURLManager {
+public interface IAnswerURLManager {
 	/**
 	 * @param id the answer id
 	 * @return
