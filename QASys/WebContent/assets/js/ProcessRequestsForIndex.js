@@ -41,18 +41,36 @@ document.getElementById("ask").addEventListener('click',function(event)
 {
 	event.stopPropagation();
 	event.preventDefault();
-	var answer = document.getElementById("main_answer_div")
-	answer.innerHTML = "";
-	startProgressBar();
 	
 	question=document.getElementById("question");
+	var temp = question.value.trim();
+	if(temp != "")
+	{
+		var answer = document.getElementById("main_answer_div")
+		answer.innerHTML = "";
+		startProgressBar();
 
-	CreateXMLHttpRequest();
-	xmlobj.open("POST","../Example2/WebServer",true);
-	xmlobj.onreadystatechange=GetAnswer;
-	xmlobj.setRequestHeader("type","ask");
-	xmlobj.setRequestHeader("question",question.value);
-	xmlobj.send(null);
+		CreateXMLHttpRequest();
+		xmlobj.open("POST","../Example2/WebServer",true);
+		xmlobj.onreadystatechange=GetAnswer;
+		xmlobj.setRequestHeader("type","ask");
+		xmlobj.setRequestHeader("question",question.value.trim());
+		if(hasUser)
+		{	
+			xmlobj.setRequestHeader("hasUser", "true");
+			xmlobj.setRequestHeader("email", email);
+		}
+		else
+		{
+			xmlobj.setRequestHeader("hasUser", "false");
+		}
+		xmlobj.send(null);
+	}
+	else
+	{
+		alert("Please enter question!");
+	}
+	
 });
 
 function Load()
@@ -90,4 +108,9 @@ document.getElementById("logout").addEventListener('click',function(event)
 {
 	hasUser=false;
 	window.location.assign("index.html");
+});
+
+document.getElementById("profile").addEventListener('click',function(event)
+{
+	window.location.assign("profile.html?email=" + email);
 });
