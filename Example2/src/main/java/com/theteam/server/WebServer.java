@@ -189,29 +189,29 @@ public class WebServer extends HttpServlet {
     	ArrayList<QATable> qATable = database.selectFromQATable(sql);
     	
     	UserInformation user = users.get(0);
-    	out.print("fname:"+user.fname + ",");
-    	out.print("mname:"+user.mname + ",");
-    	out.print("lname:"+user.lname + ",");
-    	out.print("gender:"+user.gender + ",");
-    	out.print("email:"+user.email + ",");
-    	out.print("month:"+user.month + ",");
-    	out.print("day:"+user.day + ",");
-    	out.print("year:"+user.year + ",");
-    	out.print("university:"+user.university + ",");
-    	out.print("major:"+user.major + ",");
-    	out.print("gpascale:"+user.gpascale + ",");
-    	out.print("cgpa:"+user.cgpa + ",");
-    	out.print("mgpa:"+user.mgpa + ",");
-    	out.print("program:"+user.program + "END");
+    	out.print("fnameCOLON"+user.fname + "COMMA");
+    	out.print("mnameCOLON"+user.mname + "COMMA");
+    	out.print("lnameCOLON"+user.lname + "COMMA");
+    	out.print("genderCOLON"+user.gender + "COMMA");
+    	out.print("emailCOLON"+user.email + "COMMA");
+    	out.print("monthCOLON"+user.month + "COMMA");
+    	out.print("dayCOLON"+user.day + "COMMA");
+    	out.print("yearCOLON"+user.year + "COMMA");
+    	out.print("universityCOLON"+user.university + "COMMA");
+    	out.print("majorCOLON"+user.major + "COMMA");
+    	out.print("gpascaleCOLON"+user.gpascale + "COMMA");
+    	out.print("cgpaCOLON"+user.cgpa + "COMMA");
+    	out.print("mgpaCOLON"+user.mgpa + "COMMA");
+    	out.print("programCOLON"+user.program + "END");
 
     	for(int i = 0; i < qATable.size(); i++)
     	{
     		String question = qATable.get(i).question;
     		String answer = qATable.get(i).answer;
-    		out.print(question + ":" + answer);
+    		out.print(question + "COLON" + answer);
     		if(i < qATable.size() - 1)
     		{
-    			out.print(",");
+    			out.print("COMMA");
     		}
     	}
     }
