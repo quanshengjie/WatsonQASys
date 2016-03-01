@@ -39,13 +39,13 @@ function GetAnswer()
 
 document.getElementById("ask").addEventListener('click',function(event)
 {
-	event.stopPropagation();
-	event.preventDefault();
-	
 	question=document.getElementById("question");
 	var temp = question.value.trim();
 	if(temp != "")
 	{
+		event.stopPropagation();
+		event.preventDefault();
+		
 		var answer = document.getElementById("main_answer_div")
 		answer.innerHTML = "";
 		startProgressBar();
@@ -66,11 +66,6 @@ document.getElementById("ask").addEventListener('click',function(event)
 		}
 		xmlobj.send(null);
 	}
-	else
-	{
-		alert("Please enter question!");
-	}
-	
 });
 
 function Load()
