@@ -10,7 +10,7 @@ public class Database {
 	
 	public Database()
 	{
-		first = true;
+		first = false;
 		if(first)
 		{
 			String sql;
