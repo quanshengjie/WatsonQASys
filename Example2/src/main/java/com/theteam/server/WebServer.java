@@ -57,6 +57,10 @@ public class WebServer extends HttpServlet {
     	{
     		ProcessLogIn(request, response);
     	}
+    	else if(type != null && type.equals("profile"))
+    	{
+    		ProcessProfile(request,response);
+    	}
 	}
     
     private void ProcessAsk(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -65,9 +69,15 @@ public class WebServer extends HttpServlet {
     	String answer="";
 		answer = qas.GetAnswer(question);
 		
-		String sql;
-		sql = "INSERT INTO QATable (email, question, answer) " + 
-				"VALUES ('";
+		String hasUser = request.getHeader("hasUser");
+		if(hasUser.equals("true"))
+		{
+			String email = request.getHeader("email");
+			String sql;
+			sql = "INSERT INTO QATable (email, question, answer) " + 
+					"VALUES ('" + email + "', '" + question + "', '" + answer + "');";
+			database.insert(sql);
+		}
 		
 		PrintWriter out=response.getWriter();
 		out.println(answer);
@@ -166,6 +176,44 @@ public class WebServer extends HttpServlet {
 		{
 			out.print("false");
 		}
+    }
+    
+    private void ProcessProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+    	String email=request.getHeader("email");
+    	PrintWriter out=response.getWriter();
+    
+    	String sql = "SELECT * " + "FROM USERS " + "WHERE email = '" + email + "';";
+    	ArrayList<UserInformation> users = database.selectFromUsersTable(sql);
+    	sql = "SELECT * " + "FROM QATable " + "WHERE email = '" + email + "';";
+    	ArrayList<QATable> qATable = database.selectFromQATable(sql);
+    	
+    	UserInformation user = users.get(0);
+    	out.print("fname:"+user.fname + ",");
+    	out.print("mname:"+user.mname + ",");
+    	out.print("lname:"+user.lname + ",");
+    	out.print("gender:"+user.gender + ",");
+    	out.print("email:"+user.email + ",");
+    	out.print("month:"+user.month + ",");
+    	out.print("day:"+user.day + ",");
+    	out.print("year:"+user.year + ",");
+    	out.print("university:"+user.university + ",");
+    	out.print("major:"+user.major + ",");
+    	out.print("gpascale:"+user.gpascale + ",");
+    	out.print("cgpa:"+user.cgpa + ",");
+    	out.print("mgpa:"+user.mgpa + ",");
+    	out.print("program:"+user.program + "END");
+
+    	for(int i = 0; i < qATable.size(); i++)
+    	{
+    		String question = qATable.get(i).question;
+    		String answer = qATable.get(i).answer;
+    		out.print(question + ":" + answer);
+    		if(i < qATable.size() - 1)
+    		{
+    			out.print(",");
+    		}
+    	}
     }
     
     private void sendBytes(FileInputStream fis, OutputStream out)

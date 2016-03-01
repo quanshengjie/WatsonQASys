@@ -10,7 +10,7 @@ public class Database {
 	
 	public Database()
 	{
-		first = false;
+		first = true;
 		if(first)
 		{
 			String sql;
@@ -34,13 +34,18 @@ public class Database {
 					" mgpa		REAL		NOT NULL," +
 					" program	REAL		NOT NULL)";
 			createTable(sql);
-			
+			*/
+			/*
+			sql = "DROP TABLE QATable";
+			dropTable(sql);
+			*/
 			sql = "CREATE TABLE QATable " +
-	                "(email CHAR(50) PRIMARY KEY     NOT NULL," +
+	                "(email 	CHAR(50)      NOT NULL," +
 	                " question           TEXT    NOT NULL, " + 
 	                " answer            TEXT     NOT NULL)";
 			createTable(sql);
-			*/
+			
+			/*
 			sql = "CREATE TABLE WebLink " + 
 					"(id CHAR(1024) PRIMARY KEY     NOT NULL," +
 	                " link            CHAR(1024)     NOT NULL)";
@@ -64,6 +69,7 @@ public class Database {
 			{
 				System.out.println(e);
 			}
+			*/
 		}
 	}
 	
@@ -73,6 +79,7 @@ public class Database {
 	    {
 	    	Class.forName("org.sqlite.JDBC");
 	    	String databaseLocation = getClass().getResource("QA.sqlite").toString();
+	    	//String databaseLocation = "/home/yihan/Documents/CSE5914/WorkSpace/Example2/src/main/java/com/theteam/server/QA.sqlite";
 	    	c = DriverManager.getConnection("jdbc:sqlite:" + databaseLocation);
 	    	System.out.println("Opened database successfully");
 	    } 
@@ -107,6 +114,24 @@ public class Database {
 	    	stmt.executeUpdate(sql);
 	    	stmt.close();
 	    	System.out.println("Table created successfully");
+	    } 
+	    catch ( Exception e ) {
+	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	    	System.exit(0);
+	    }
+	    disconnection();
+	}
+	
+	private void dropTable(String sql)
+	{
+		connection();
+	    Statement stmt = null;
+	    try 
+	    {
+	    	stmt = c.createStatement();
+	    	stmt.executeUpdate(sql);
+	    	stmt.close();
+	    	System.out.println("Table droppted successfully");
 	    } 
 	    catch ( Exception e ) {
 	    	System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -185,13 +210,13 @@ public class Database {
 	{
 		connection();
 	    Statement stmt = null;
+	    ArrayList<QATable> qas = new ArrayList<QATable>();
 	    
 	    try 
 	    {
 	    	c.setAutoCommit(false);
 	    	stmt = c.createStatement();
 	    	ResultSet rs = stmt.executeQuery(sql);
-	    	ArrayList<QATable> qas = new ArrayList<QATable>();
 	    	while ( rs.next() ) 
 	    	{
 	    		QATable qa = new QATable();
@@ -210,20 +235,20 @@ public class Database {
 	    	System.exit(0);
 	    }
 	    disconnection();
-	    return null;
+	    return qas;
 	}
 	
 	public ArrayList<WebLink> selectFromWebLinkTable(String sql)
 	{
 		connection();
 	    Statement stmt = null;
+	    ArrayList<WebLink> webLinks = new ArrayList<WebLink>();
 	    
 	    try 
 	    {
 	    	c.setAutoCommit(false);
 	    	stmt = c.createStatement();
 	    	ResultSet rs = stmt.executeQuery(sql);
-	    	ArrayList<WebLink> webLinks = new ArrayList<WebLink>();
 	    	while ( rs.next() ) 
 	    	{
 	    		WebLink webLink = new WebLink();
@@ -241,7 +266,7 @@ public class Database {
 	    	System.exit(0);
 	    }
 	    disconnection();
-	    return null;
+	    return webLinks;
 	}
 	
 	public void update(String sql)
