@@ -34,9 +34,12 @@ function getUserInformation()
 	if(xmlobj.readyState==4 && xmlobj.status==200)
 	{
 		var response = xmlobj.responseText;
-		qas = response.split("COMMA");
 		count = 0;
-		loadQuestions();
+		if(response != "")
+		{
+			qas = response.split("COMMA");
+			loadQuestions();
+		}
 	}
 	else if(xmlobj.status != 200)
 	{
