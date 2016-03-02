@@ -153,17 +153,20 @@ document.getElementById("next").addEventListener('click',function(event)
 	}
 });
 
-document.getElementById("profile").addEventListener('click',function(event)
+document.getElementById("profile").onclick = function(event)
 {
 	window.location.assign("profile.html?email=" + email);
-});
+	return false;
+};
 
-document.getElementById("index").addEventListener('click',function(event)
+document.getElementById("index").onclick = function(event)
 {
 	window.location.assign("index.html?email=" + email);
-});
+	return false;
+};
 
-document.getElementById("aboutus").addEventListener('click',function(event)
+document.getElementById("aboutus").onclick = function(event)
 {
 	window.location.assign("aboutus.html?email=" + email);
-});
+	return false;
+};

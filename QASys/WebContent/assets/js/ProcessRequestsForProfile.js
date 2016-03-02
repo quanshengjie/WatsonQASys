@@ -87,17 +87,20 @@ document.getElementById("submit").addEventListener('click',function(event)
 	}
 });
 
-document.getElementById("history").addEventListener('click',function(event)
+document.getElementById("history").onclick = function(event)
 {
 	window.location.assign("history.html?email=" + email);
-});
+	return false;
+};
 
-document.getElementById("index").addEventListener('click',function(event)
+document.getElementById("index").onclick = function(event)
 {
 	window.location.assign("index.html?email=" + email);
-});
+	return false;
+};
 
-document.getElementById("aboutus").addEventListener('click',function(event)
+document.getElementById("aboutus").onclick = function(event)
 {
 	window.location.assign("aboutus.html?email=" + email);
-});
+	return false;
+};

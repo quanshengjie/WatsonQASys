@@ -33,18 +33,21 @@ function Load()
 	}
 }
 
-document.getElementById("logout").addEventListener('click',function(event)
+document.getElementById("logout").onclick = function(event)
 {
 	hasUser=false;
 	window.location.assign("index.html");
-});
+	return false;
+};
 
-document.getElementById("profile").addEventListener('click',function(event)
+document.getElementById("profile").onclick = function(event)
 {
 	window.location.assign("profile.html?email=" + email);
-});
+	return false;
+};
 
-document.getElementById("history").addEventListener('click',function(event)
+document.getElementById("history").onclick = function(event)
 {
 	window.location.assign("history.html?email=" + email);
-});
+	return false;
+};
