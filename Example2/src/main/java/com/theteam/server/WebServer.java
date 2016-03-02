@@ -61,6 +61,14 @@ public class WebServer extends HttpServlet {
     	{
     		ProcessProfile(request,response);
     	}
+    	else if(type != null && type.equals("history"))
+    	{
+    		ProcessHistory(request,response);
+    	}
+    	else if(type != null && type.equals("changepwd"))
+    	{
+    		ProcessChangePWD(request,response);
+    	}
 	}
     
     private void ProcessAsk(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -92,7 +100,6 @@ public class WebServer extends HttpServlet {
     	user.gender = request.getHeader("gender");
     	user.email = request.getHeader("email");
     	user.pwd = request.getHeader("pwd");
-    	user.confirmpwd = request.getHeader("comfirmpwd");
     	user.month = Integer.parseInt(request.getHeader("month"));
     	user.day = Integer.parseInt(request.getHeader("day"));
     	user.year = Integer.parseInt(request.getHeader("year"));
@@ -130,11 +137,11 @@ public class WebServer extends HttpServlet {
 		else
 		{
 			sql = "INSERT INTO USERS (fname, mname, lname, gender,"
-					+ " email, pwd, confirmpwd, month, day, year, university,"
+					+ " email, pwd, month, day, year, university,"
 					+ " major, gpascale, cgpa, mgpa, program) "
 					+ " VALUES ('" + user.fname + "', '" + user.mname + "', '"
 					+ user.lname + "', '" + user.gender + "', '" + user.email
-					+ "', '" + user.pwd +"', '" + user.confirmpwd + "', "
+					+ "', '" + user.pwd + "', "
 					+ user.month + ", " + user.day + ", " + user.year + ", '"
 					+ user.university + "', '" + user.major + "', " + user.gpascale
 					+ ", " + user.cgpa + ", " + user.mgpa + ", '" + user.program + "');";
@@ -185,15 +192,13 @@ public class WebServer extends HttpServlet {
     
     	String sql = "SELECT * " + "FROM USERS " + "WHERE email = '" + email + "';";
     	ArrayList<UserInformation> users = database.selectFromUsersTable(sql);
-    	sql = "SELECT * " + "FROM QATable " + "WHERE email = '" + email + "';";
-    	ArrayList<QATable> qATable = database.selectFromQATable(sql);
     	
     	UserInformation user = users.get(0);
     	out.print("fnameCOLON"+user.fname + "COMMA");
     	out.print("mnameCOLON"+user.mname + "COMMA");
     	out.print("lnameCOLON"+user.lname + "COMMA");
-    	out.print("genderCOLON"+user.gender + "COMMA");
-    	out.print("emailCOLON"+user.email + "COMMA");
+    	//out.print("genderCOLON"+user.gender + "COMMA");
+    	//out.print("emailCOLON"+user.email + "COMMA");
     	out.print("monthCOLON"+user.month + "COMMA");
     	out.print("dayCOLON"+user.day + "COMMA");
     	out.print("yearCOLON"+user.year + "COMMA");
@@ -202,8 +207,17 @@ public class WebServer extends HttpServlet {
     	out.print("gpascaleCOLON"+user.gpascale + "COMMA");
     	out.print("cgpaCOLON"+user.cgpa + "COMMA");
     	out.print("mgpaCOLON"+user.mgpa + "COMMA");
-    	out.print("programCOLON"+user.program + "END");
-
+    	out.print("programCOLON"+user.program);
+    }
+    
+    private void ProcessHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+    	String email=request.getHeader("email");
+    	PrintWriter out=response.getWriter();
+    
+    	String sql = "SELECT * " + "FROM QATable " + "WHERE email = '" + email + "';";
+    	ArrayList<QATable> qATable = database.selectFromQATable(sql);
+    	
     	for(int i = 0; i < qATable.size(); i++)
     	{
     		String question = qATable.get(i).question;
@@ -214,6 +228,16 @@ public class WebServer extends HttpServlet {
     			out.print("COMMA");
     		}
     	}
+    }
+    
+    private void ProcessChangePWD(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+    	String email=request.getHeader("email");
+    	String newPWD=request.getHeader("pwd");
+    	PrintWriter out=response.getWriter();
+    
+    	String sql = "UPDATE USERS SET pwd = '" + newPWD + "' WHERE email='" + email + "';";
+    	database.update(sql);
     }
     
     private void sendBytes(FileInputStream fis, OutputStream out)

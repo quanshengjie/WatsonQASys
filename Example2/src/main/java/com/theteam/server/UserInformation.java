@@ -7,7 +7,6 @@ public class UserInformation {
 	public String gender=null;
 	public String email=null;
 	public String pwd=null;
-	public String confirmpwd=null;
 	public int month=0;
 	public int day=0;
 	public int year=0;

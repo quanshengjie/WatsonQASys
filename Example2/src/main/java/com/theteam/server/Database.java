@@ -14,7 +14,7 @@ public class Database {
 		if(first)
 		{
 			String sql;
-			/*
+			
 			first = false;
 			sql = "CREATE TABLE USERS " +
 					"(fname		TEXT		NOT NULL," +
@@ -23,7 +23,6 @@ public class Database {
 					" gender 	CHAR(10)	NOT NULL," +
 					" email 	CHAR(50) PRIMARY KEY	NOT NULL," +
 					" pwd		CHAR(50)	NOT NULL," +
-					" confirmpwd	CHAR(50)	NOT NULL," +
 					" month		INT			," +
 					" day		INT			," +
 					" year		INT			," +
@@ -34,7 +33,7 @@ public class Database {
 					" mgpa		REAL		NOT NULL," +
 					" program	REAL		NOT NULL)";
 			createTable(sql);
-			*/
+			
 			/*
 			sql = "DROP TABLE QATable";
 			dropTable(sql);
@@ -78,8 +77,9 @@ public class Database {
 	    try 
 	    {
 	    	Class.forName("org.sqlite.JDBC");
-	    	String databaseLocation = getClass().getResource("QA.sqlite").toString();
-	    	//String databaseLocation = "/home/yihan/Documents/CSE5914/WorkSpace/Example2/src/main/java/com/theteam/server/QA.sqlite";
+	    	String databaseLocation = getClass().getResource("QA.sqilte").toString();
+	    	System.out.println(databaseLocation);
+	    	//String databaseLocation = "main/java/com/theteam/server/QA.sqlite";
 	    	c = DriverManager.getConnection("jdbc:sqlite:" + databaseLocation);
 	    	System.out.println("Opened database successfully");
 	    } 
@@ -181,7 +181,6 @@ public class Database {
 	    		user.gender = rs.getString("gender");
 	    		user.email = rs.getString("email");
 	    		user.pwd = rs.getString("pwd");
-	    		user.confirmpwd = rs.getString("confirmpwd");
 	    		user.month = rs.getInt("month");
 	    		user.day = rs.getInt("day");
 	    		user.year = rs.getInt("year");
@@ -276,6 +275,7 @@ public class Database {
 		
 		try 
 		{
+			c.setAutoCommit(false);
 		    stmt = c.createStatement();
 		    stmt.executeUpdate(sql);
 		    c.commit();
@@ -297,6 +297,7 @@ public class Database {
 		
 		try 
 		{
+			c.setAutoCommit(false);
 		    stmt = c.createStatement();
 		    stmt.executeUpdate(sql);
 		    c.commit();
