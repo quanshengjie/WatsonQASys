@@ -2,6 +2,11 @@ package com.theteam.server;
 
 import java.sql.*;
 import java.util.*;
+
+import javax.servlet.ServletContext;
+
+import junit.framework.Test;
+
 import java.io.*;
 
 public class Database {
@@ -77,9 +82,9 @@ public class Database {
 	    try 
 	    {
 	    	Class.forName("org.sqlite.JDBC");
-	    	//String databaseLocation = getClass().getResource("QA.sqilte").toString();
+	    	String databaseLocation = Test.class.getResource("/").toString() + "QA.sqlite";
 	    	//System.out.println(databaseLocation);
-	    	String databaseLocation = "/home/yihan/Documents/CSE5914/WorkSpace/Example2/src/main/resources/QA.sqlite";
+	    	//String databaseLocation = "/home/yihan/Documents/CSE5914/WorkSpace/Example2/src/main/resources/QA.sqlite";
 	    	c = DriverManager.getConnection("jdbc:sqlite:" + databaseLocation);
 	    	System.out.println("Opened database successfully");
 	    } 

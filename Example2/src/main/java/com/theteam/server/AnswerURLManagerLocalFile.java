@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import junit.framework.Test;
+
 
 /**
  * @author shengjie
