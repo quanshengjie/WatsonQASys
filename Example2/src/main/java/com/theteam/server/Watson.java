@@ -168,13 +168,16 @@ public class Watson implements IQuestionAnswerSystem
 		boolean isBetter = false;
 		Document doc = Jsoup.parse(html);
 		Elements links = doc.select("a[href]");
+		Elements spanImg = doc.select("span[src]");
 		Elements table = doc.select("table");
 		Elements tr = doc.select("tr");
 		Elements td = doc.select("td");
 		Elements ul = doc.select("ul");
 		Elements li = doc.select("li");
+		Elements img = doc.select("img");
 		if(links.size() > 0 || table.size() > 0 || tr.size() > 0 
-		   || td.size() > 0 || ul.size() > 0 || li.size() > 0)
+		   || td.size() > 0 || ul.size() > 0 || li.size() > 0
+		   || spanImg.size() > 0 || img.size() > 0)
 		{
 			isBetter = true;
 		}
