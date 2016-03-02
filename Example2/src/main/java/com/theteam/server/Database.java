@@ -44,13 +44,13 @@ public class Database {
 	                " answer            TEXT     NOT NULL)";
 			createTable(sql);
 			
-			/*
+			
 			sql = "CREATE TABLE WebLink " + 
 					"(id CHAR(1024) PRIMARY KEY     NOT NULL," +
 	                " link            CHAR(1024)     NOT NULL)";
 			createTable(sql);
 			
-			String urlList = "/home/yihan/Documents/CSE5914/WorkSpace/Example2/src/main/java/com/theteam/server/urlList.txt";
+			String urlList = "/home/yihan/Documents/CSE5914/WorkSpace/Example2/src/main/resources/urlList.txt";
 			try
 			{
 				FileReader fileReader = new FileReader(urlList);
@@ -68,7 +68,7 @@ public class Database {
 			{
 				System.out.println(e);
 			}
-			*/
+			
 		}
 	}
 	
@@ -77,9 +77,9 @@ public class Database {
 	    try 
 	    {
 	    	Class.forName("org.sqlite.JDBC");
-	    	String databaseLocation = getClass().getResource("QA.sqilte").toString();
-	    	System.out.println(databaseLocation);
-	    	//String databaseLocation = "main/java/com/theteam/server/QA.sqlite";
+	    	//String databaseLocation = getClass().getResource("QA.sqilte").toString();
+	    	//System.out.println(databaseLocation);
+	    	String databaseLocation = "/home/yihan/Documents/CSE5914/WorkSpace/Example2/src/main/resources/QA.sqlite";
 	    	c = DriverManager.getConnection("jdbc:sqlite:" + databaseLocation);
 	    	System.out.println("Opened database successfully");
 	    } 
