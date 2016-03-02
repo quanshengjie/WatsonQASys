@@ -54,38 +54,44 @@ document.getElementById("signup").addEventListener('click',function(event)
 	mgpa=document.getElementById("mgpa");
 	program=document.getElementById("program");
 
-	CreateXMLHttpRequest();
-	xmlobj.open("POST","../Example2/WebServer",true);
-	xmlobj.onreadystatechange=GetFeedback;
-	xmlobj.setRequestHeader("type","signup");
-	xmlobj.setRequestHeader("fname",fname.value);
-	xmlobj.setRequestHeader("mname",mname.value);
-	xmlobj.setRequestHeader("lname",lname.value);
-	if(male.checked==true)
+	if(pwd.value == confirmpwd.value)
 	{
-		xmlobj.setRequestHeader("gender","male");
-	}
-	else if(female.checked==true)
-	{
-		xmlobj.setRequestHeader("gender","female");
+		CreateXMLHttpRequest();
+		xmlobj.open("POST","../Example2/WebServer",true);
+		xmlobj.onreadystatechange=GetFeedback;
+		xmlobj.setRequestHeader("type","signup");
+		xmlobj.setRequestHeader("fname",fname.value);
+		xmlobj.setRequestHeader("mname",mname.value);
+		xmlobj.setRequestHeader("lname",lname.value);
+		if(male.checked==true)
+		{
+			xmlobj.setRequestHeader("gender","male");
+		}
+		else if(female.checked==true)
+		{
+			xmlobj.setRequestHeader("gender","female");
+		}
+		else
+		{
+			xmlobj.setRequestHeader("gender","notknow");
+		}
+		xmlobj.setRequestHeader("email",email.value);
+		xmlobj.setRequestHeader("pwd",pwd.value);
+		xmlobj.setRequestHeader("month",month.value);
+		xmlobj.setRequestHeader("day",day.value);
+		xmlobj.setRequestHeader("year",year.value);
+		xmlobj.setRequestHeader("university",university.value);
+		xmlobj.setRequestHeader("major",major.value);
+		xmlobj.setRequestHeader("gpascale",gpascale.value);
+		xmlobj.setRequestHeader("cgpa",cgpa.value);
+		xmlobj.setRequestHeader("mgpa",mgpa.value);
+		xmlobj.setRequestHeader("program",program.value);
+		xmlobj.send(null);
 	}
 	else
 	{
-		xmlobj.setRequestHeader("gender","notknow");
+		alert("Please re-confirm password");
 	}
-	xmlobj.setRequestHeader("email",email.value);
-	xmlobj.setRequestHeader("pwd",pwd.value);
-	xmlobj.setRequestHeader("confirmpwd",confirmpwd.value);
-	xmlobj.setRequestHeader("month",month.value);
-	xmlobj.setRequestHeader("day",day.value);
-	xmlobj.setRequestHeader("year",year.value);
-	xmlobj.setRequestHeader("university",university.value);
-	xmlobj.setRequestHeader("major",major.value);
-	xmlobj.setRequestHeader("gpascale",gpascale.value);
-	xmlobj.setRequestHeader("cgpa",cgpa.value);
-	xmlobj.setRequestHeader("mgpa",mgpa.value);
-	xmlobj.setRequestHeader("program",program.value);
-	xmlobj.send(null);
 });
 
 function GetFeedback()

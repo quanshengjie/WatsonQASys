@@ -17,80 +17,152 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     </head>
-    <body class="" onload="Load()">
+    <body class="" onload="Load()"> 
         <div class="container">
             <div class="starter-template">
+            	<div class="dropdown navbar-text navbar-right" id="usernav"> 
+                    <p id="username">Username</p> 
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Setting
+                        <span class="glyphicon glyphicon-align-right" aria-hidden="true"></span> 
+                        <span class="caret"></span> 
+                    </button>                     
+                    <ul class="dropdown-menu"> 
+                        <li> 
+                            <a>Profile</a> 
+                        </li>   
+                        <li>
+                        	<a id="history">History</a>
+                        </li>                      
+                        <li> 
+                            <a href="index.html" id="logout">Log out</a> 
+                        </li>                         
+                    </ul>                     
+                </div> 
                 <h2 class="text-info"><strong>College Admission Q&A System</strong></h2>
                 <img src="http://www.verdin.com/images/qa-icon.png" height="120" alt="logo" width="160" class="image-rounded" />
                 <ol class="breadcrumb"> 
-                    <li>
-                        <a href="index.html">Home</a>
+                    <li >
+                    	<a id="index">Home</a>
+                    </li>                                         
+                    <li> 
+                        <a id="aboutus">About Us</a> 
                     </li>                     
-                    <li>
-                        <a href="aboutus.html">About Us</a>
-                    </li>
-                    <li></li>
-                    <li>
-                        <div class="dropdown">
-                            <a data-toggle="dropdown" href="#">Username</a>
-                            <ul class="dropdown-menu" role="menu"> 
-                                <li>
-                                    <a href="#">Log out</a>
-                                </li>                                 
-                            </ul>                             
-                        </div>
-                    </li>                     
-                </ol>
+                </ol>  
                 <div class="row">
-                    <div class="col-md-8">
-                        <block class=""> 
-                            <large class="">
-                                <strong class=""><h1><strong style="line-height: 1.42857143;"><strong style="line-height: 1.42857143;"><strong style="line-height: 1.42857143;">Ciao,<i> Username!</i></strong></strong></strong><form role="form"> 
-                                            <div class="form-group"> 
-                                                <label></label>
-                                            </div>                                             
-                                        </form></h1></strong>
-                            </large>
-                        </block>
-                        <h3>Column title</h3> 
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p> 
-                    </div>
-                    <div class="col-md-4"> 
-</div>
-                    <div class="col-xs-6 col-md-3"> 
-                        <a href="#" class="thumbnail"> 
-                            <img src="767853.jpg" alt="profile"> 
-                        </a>                         
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        <ul class="list-group"> 
-                            <li class="list-group-item">
-                                <dl> 
-                                    <dt><span class="glyphicon glyphicon-star"></span>Birthday</dt> 
-                                    <dd>Date</dd>                                     
-                                    <dt><span class="glyphicon glyphicon-star"></span>Current School</dt> 
-                                    <dd>School name.</dd>
-                                    <dt><span class="glyphicon glyphicon-star"></span>Current major</dt> 
-                                    <dd>Major.</dd>
-                                </dl>
-                            </li>                             
-                            <li class="list-group-item">Dapibus ac facilisis in</li>                             
-                            <li class="list-group-item">Morbi leo risus</li>                             
+                    <block>
+                        <ul class="nav nav-tabs">
+                            <li class="active" id="navProfile">
+                                <a href="#profile" data-toggle="tab">Profile</a>
+                            </li>
+                            <li class="" id="navPassword">
+                                <a href="#password" data-toggle="tab">Password</a>
+                            </li>
                         </ul>
-                        <h3>Column title</h3> 
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p> 
-                    </div>
-                    <div class="col-md-4"> 
-</div>
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane active" id="profile">
+                                <form id="tab" class="form-horizantal">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Name</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" id="name" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12"> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Email</label>
+                                        <div class="col-md-6">
+                                            <input type="email" class="form-control" id="email" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12"> </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Birthday</label>
+                                        <div class="col-md-4">
+                                            <input class="form-control" type="date" value="" id="birthday">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12"> </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Current University</label>
+                                        <div class="col-md-6">
+                                            <input class="form-control" type="text" id="university" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="label-control col-md-2">Current major</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" id="major" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    <div class="form-group">
+                                        <label class="label-control col-md-2">GPA Scale</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" id="gpascale" value="">
+                                        </div>
+                                        <label class="label-control col-md-1">Cumulative GPA</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" id="cgpa" value="">
+                                        </div>
+                                        <label class="label-control col-md-1">Major GPA</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" id="mgpa" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="label-control col-md-2">Applying program</label>
+                                        <div class="col-md-10">
+                                            <input type="text" class="col-md-10" id="program" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-12"></div>
+                                    </div>
+                                    <!--  div class="form-group">
+                                        <div class="col-md-12">
+                                            <button type="submit">Update</button>
+                                        </div>                                         
+                                    </div>-->
+                                </form>
+                            </div>
+                            <div class="tab-pane" id="password">
+                                <form id="tab2">
+                                    <div class="form-group">
+                                        <label class="label-control col-md-2">New Password</label>
+                                        <div class="col-md-10">
+                                            <input type="password" class="col-md-6" id="newpwd">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="label-control col-md-2">Confirm Password</label>
+                                        <div class="col-md-10">
+                                            <input type="password" class="col-md-6" id="newconfirmpwd">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-8">
+                                            <button type="submit" id="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </block>
                 </div>
             </div>
-            <div class="form-center">
-</div>
             <div class="footer">
-                <h5 class="text-center"><span class="glyphicon glyphicon-copyright-mark"></span>The Team<br>
-        Acknowledge to <strong>IBM</strong><span class="glyphicon glyphicon-registration-mark"></span><strong> Watson</strong></h5>
+                <h5 class="text-center"><div class="row"></div>
+                <span class="glyphicon glyphicon-copyright-mark"></span>The Team<br>Acknowledge to <strong>IBM</strong><span class="glyphicon glyphicon-registration-mark"></span><strong> Watson</strong></h5>
             </div>
         </div>
         <!-- /.container -->

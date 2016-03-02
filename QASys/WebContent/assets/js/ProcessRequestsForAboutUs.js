@@ -38,3 +38,13 @@ document.getElementById("logout").addEventListener('click',function(event)
 	hasUser=false;
 	window.location.assign("index.html");
 });
+
+document.getElementById("profile").addEventListener('click',function(event)
+{
+	window.location.assign("profile.html?email=" + email);
+});
+
+document.getElementById("history").addEventListener('click',function(event)
+{
+	window.location.assign("history.html?email=" + email);
+});

@@ -17,24 +17,68 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     </head>
-    <body class="">
+    <body class="" onload="Load()">
         <div class="container">
             <div class="starter-template">
+            	<div class="dropdown navbar-text navbar-right" id="usernav">
+                    <p id="username">Username</p>
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Setting
+                        <span class="glyphicon glyphicon-align-right" aria-hidden="true"></span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a id="profile">Profile</a>
+                        </li>
+                        <li>
+                            <a id="history">History</a>
+                        </li>
+                        <li>
+                            <a href="index.html" id="logout">Log out</a>
+                        </li>
+                    </ul>
+                </div>
                 <h2 class="text-info"><strong>College Admission Q&A System</strong></h2>
                 <img src="http://www.verdin.com/images/qa-icon.png" height="120" alt="logo" width="160" class="image-rounded" />
                 <ol class="breadcrumb"> 
                     <li>
-                        <a href="index">Home</a>
+                        <a id="index" href="index.html">Home</a>
                     </li>                     
-                    <li>
+                    <li id="login" style="display:inline-block">
                         <a href="login.html">Log In</a>
                     </li>
-                    <li>
+                    <li id="signup" style="display:inline-block">
                         <a href="signup.html">Sign Up</a>
                     </li>
                     <li class="active">About us</li>
                 </ol>
-                <img src="TheTeam.png" height="480" width="841" class="image-rounded" />
+                <div class="row">
+                    <div id="carousel1" class="carousel slide" data-ride="carousel"> 
+                        <!-- Indicators -->                         
+                        <ol class="carousel-indicators"> 
+                            <li data-target="#carousel1" data-slide-to="0" class="active"></li>                             
+                            <li data-target="#carousel1" data-slide-to="1"></li>                             
+                        </ol>                         
+                        <!-- Wrapper for slides -->                         
+                        <div class="carousel-inner"> 
+                            <div class="item active"> 
+                                <img src="buckeye_love_.jpg" alt="buckeyelove" /> 
+                                <div class="carousel-caption"> 
+                                    <p>Ohio State University</p> 
+                                </div>                                 
+                            </div>                             
+                            <div class="item"> 
+                                <img src="duck.jpg" alt="duck" /> 
+                                <div class="carousel-caption"> 
+                                    <p>Mirror Lake</p> 
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                        <!-- Controls -->                         
+                        <a class="left carousel-control" href="#carousel1" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a> 
+                        <a class="right carousel-control" href="#carousel1" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a> 
+                    </div>
+                </div>
             </div>
         </div>
         <div class="footer">
@@ -45,6 +89,7 @@
         <!-- Bootstrap core JavaScript
     ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
+        <script src="assets/js/ProcessRequestsForAboutUs.js"></script>
         <script src="assets/js/jquery.min.js" class=""></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
