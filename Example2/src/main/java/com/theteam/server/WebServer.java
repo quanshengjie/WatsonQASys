@@ -82,8 +82,20 @@ public class WebServer extends HttpServlet {
 		{
 			String email = request.getHeader("email");
 			String sql;
+			String[] temp = question.split("'");
+			String newQuestion = temp[0];
+			for(int i = 1; i < temp.length; i++)
+			{
+				newQuestion = newQuestion + "SINGLEQUOTE" + temp[i];
+			}
+			temp = answer.split("'");
+			String newAnswer = temp[0];
+			for(int i = 1; i < temp.length; i++)
+			{
+				newAnswer = newAnswer + "SINGLEQUOTE" + temp[i];
+			}
 			sql = "INSERT INTO QATable (email, question, answer) " + 
-					"VALUES ('" + email + "', '" + question + "', '" + answer + "');";
+					"VALUES ('" + email + "', '" + newQuestion + "', '" + newAnswer + "');";
 			database.insert(sql);
 		}
 		
@@ -221,7 +233,19 @@ public class WebServer extends HttpServlet {
     	for(int i = 0; i < qATable.size(); i++)
     	{
     		String question = qATable.get(i).question;
+    		String[] temp = question.split("SINGLEQUOTE");
+    		question = temp[0];
+    		for(int j = 1; j < temp.length; j++)
+    		{
+    			question = question + "'" + temp[j];
+    		}
     		String answer = qATable.get(i).answer;
+    		temp = answer.split("SINGLEQUOTE");
+    		answer = temp[0];
+    		for(int j = 1; j < temp.length; j++)
+    		{
+    			answer = answer + "'" + temp[j];
+    		}
     		out.print(question + "COLON" + answer);
     		if(i < qATable.size() - 1)
     		{
