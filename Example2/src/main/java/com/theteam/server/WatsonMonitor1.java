@@ -7,8 +7,8 @@ import java.util.TimerTask;
 public class WatsonMonitor1 implements IWatsonMonitor {
 
 	// interval in unit of sec
-	private final int INTERVAL = 5000;
-	private final int INTERVAL_VARIANCE = 10;
+	private final int INTERVAL = 50000;
+	private final int INTERVAL_VARIANCE = 30000;
 	private enum WATSON_STATUS
 	{
 		UP, STRANGE, DOWN
@@ -23,7 +23,9 @@ public class WatsonMonitor1 implements IWatsonMonitor {
 	public void Init() {
 		Random generator = new Random(System.currentTimeMillis());
 		timer = new Timer("WatsonMonitorTimer", true);
-		timer.scheduleAtFixedRate(new WatsonMonitorTask(), 0, INTERVAL + generator.nextInt(INTERVAL_VARIANCE));
+		int timeInterval = INTERVAL + generator.nextInt(INTERVAL_VARIANCE);
+		System.out.println("Checking interval is " + timeInterval + " sec");
+		timer.scheduleAtFixedRate(new WatsonMonitorTask(), 0, timeInterval);
 	}
 	
 	private void ChangeStatus(WATSON_STATUS status)
