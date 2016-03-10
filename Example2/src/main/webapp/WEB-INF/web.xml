@@ -17,6 +17,13 @@
 		<description>Manage Login requests</description>
 		<servlet-class>com.theteam.server.LoginServer</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>WatsonMonitor</servlet-name>
+		<display-name>WatsonMonitor</display-name>
+		<description>Monitor Watson Status</description>
+		<servlet-class>com.theteam.server.WatsonMonitor</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>WebServer</servlet-name>
