@@ -20,6 +20,7 @@ public class WatsonPinger1 implements IWatsonPinger {
 	
 	public int lightPing()
 	{
+		int ret = -1;
 		try {
 			
 			
@@ -42,8 +43,9 @@ public class WatsonPinger1 implements IWatsonPinger {
 			conn.setRequestProperty("X-SyncTimeout", "30");
 			conn.setDoOutput(true);
 			conn.getOutputStream().write(postDataBytes);
-
-			return conn.getResponseCode();
+			ret = conn.getResponseCode();
+			conn.disconnect();
+			return ret;
 		}
 
 		catch (MalformedURLException e) { 
@@ -52,7 +54,7 @@ public class WatsonPinger1 implements IWatsonPinger {
 		catch (IOException e) {   
 			e.printStackTrace();
 		}
-		return -1;
+		return ret;
 	}
 
 	public int heavyPing() {
@@ -77,6 +79,7 @@ public class WatsonPinger1 implements IWatsonPinger {
 			conn.setDoOutput(true);
 			conn.getOutputStream().write(postDataBytes);
 			status1 = conn.getResponseCode();
+			conn.disconnect();
 			
 			// second ping, document service
 			url = new URL("https://dal09-gateway.watsonplatform.net/instance/579/deepqa/v1/question/document/T_A29BAE8BF50A1FD5B5914426D2D35E9D/0/-1");
@@ -87,6 +90,7 @@ public class WatsonPinger1 implements IWatsonPinger {
 			conn.setRequestProperty("Authorization", "Basic " + encoding);
 			conn.setDoOutput(true);
 			status2 = conn.getResponseCode();
+			conn.disconnect();
 			
 			// third ping, normal question service
 			url = new URL("https://dal09-gateway.watsonplatform.net/instance/579/deepqa/v1/question");
@@ -105,6 +109,7 @@ public class WatsonPinger1 implements IWatsonPinger {
 			conn.setDoOutput(true);
 			conn.getOutputStream().write(postDataBytes);
 			status3 = conn.getResponseCode();
+			conn.disconnect();
 			
 			// forth ping, document service
 			url = new URL("https://dal09-gateway.watsonplatform.net/instance/579/deepqa/v1/question/document/T_A29BAE8BF50A1FD5B5914426D2D35E9D/0/-1");
@@ -115,6 +120,7 @@ public class WatsonPinger1 implements IWatsonPinger {
 			conn.setRequestProperty("Authorization", "Basic " + encoding);
 			conn.setDoOutput(true);
 			status4 = conn.getResponseCode();
+			conn.disconnect();
 		}
 
 		catch (MalformedURLException e) { 
