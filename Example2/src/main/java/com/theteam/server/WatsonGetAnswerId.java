@@ -22,14 +22,14 @@ import java.util.Map;
  */
 public class WatsonGetAnswerId implements IAnswerIdManager
 {
-	private String username = "5e088ca7-28e1-45e0-8e55-9929c7a71438";
-	private String password = "ESWUguQIskzH";
+	private String username = "b87698a6-9f6b-4b05-aa1c-c8da2077a155";
+	private String password = "R6KzUnQg2HVO";
 	
 	private String requestWatsonForId(String ans)
 	{
 		try {
 			
-			String urlStr = "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/c7e487x21-nlc-10734/classify";
+			String urlStr = "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/668877x36-nlc-21/classify";
 			urlStr += "?text=" + URLEncoder.encode(ans, "UTF-8");
 			URL url = new URL(urlStr);
 			
