@@ -4,10 +4,12 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.servlet.ServletContext;
+
 public class WatsonMonitor1 implements IWatsonMonitor {
 
 	// interval in unit of sec
-	private final int INTERVAL = 50000;
+	private final int INTERVAL = 60000;
 	private final int INTERVAL_VARIANCE = 30000;
 	private enum WATSON_STATUS
 	{
@@ -18,7 +20,9 @@ public class WatsonMonitor1 implements IWatsonMonitor {
 	private IWatsonPinger watsonPinger = new WatsonPinger1();
 	private WATSON_STATUS watsonStatus = WATSON_STATUS.DOWN;
 	
-	WatsonMonitor1() {	}
+	WatsonMonitor1()
+	{
+	}
 	
 	public void Init() {
 		Random generator = new Random(System.currentTimeMillis());
@@ -51,34 +55,43 @@ public class WatsonMonitor1 implements IWatsonMonitor {
 		}
 	}
 
+	public void TestWatson()
+	{
+		System.out.println("Now checking Watson Status by "+ this.toString());
+        int statusCode = watsonPinger.lightPing();
+        if(statusCode / 100 == 2)
+        {
+       	 ChangeStatus(WATSON_STATUS.UP);
+        }
+        else
+        {
+       	 int statusCode1 = watsonPinger.heavyPing();
+       	 int statusCode2 = watsonPinger.heavyPing();
+       	 int statusCode3 = watsonPinger.heavyPing();
+       	 if(statusCode1 / 100 != 2 && statusCode2 / 100 != 2 && statusCode3 / 100 != 2)
+       	 {
+       		 if (statusCode / 100 == 5)
+                {
+               	 ChangeStatus(WATSON_STATUS.DOWN);
+                }
+                else
+                {
+               	 ChangeStatus(WATSON_STATUS.STRANGE);
+                }
+       	 }
+        }
+	}
+	
+	public void Stop()
+	{
+		timer.cancel();
+	}
 	
 	public class WatsonMonitorTask extends TimerTask {
 
         @Override
         public void run() {
-        	 System.out.println("Now checking Watson Status");
-             int statusCode = watsonPinger.lightPing();
-             if(statusCode / 100 == 2)
-             {
-            	 ChangeStatus(WATSON_STATUS.UP);
-             }
-             else
-             {
-            	 int statusCode1 = watsonPinger.heavyPing();
-            	 int statusCode2 = watsonPinger.heavyPing();
-            	 int statusCode3 = watsonPinger.heavyPing();
-            	 if(statusCode1 / 100 != 2 && statusCode2 / 100 != 2 && statusCode3 / 100 != 2)
-            	 {
-            		 if (statusCode / 100 == 5)
-                     {
-                    	 ChangeStatus(WATSON_STATUS.DOWN);
-                     }
-                     else
-                     {
-                    	 ChangeStatus(WATSON_STATUS.STRANGE);
-                     }
-            	 }
-             }
+        	 TestWatson();
         }
 
    }
