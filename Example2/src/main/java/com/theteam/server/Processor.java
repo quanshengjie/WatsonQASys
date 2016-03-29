@@ -1,85 +1,24 @@
 package com.theteam.server;
-import java.io.* ;
-
-import java.net.* ;
-import java.util.* ;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class Bob
- */
-public class WebServer extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private IQuestionAnswerSystem qas = new Watson();
-	private Database database = new Database();
-	private Processor processor = new Processor(qas, database);
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public WebServer() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    
-    public void init() throws ServletException
+public class Processor {
+	private static IQuestionAnswerSystem qas;
+	private static Database database;
+	
+	public Processor(IQuestionAnswerSystem qas, Database database)
 	{
-	    // Do required initialization
-	    qas.Init();
-	    
-	    //*************************************
-	    /* Test User
-	    UserInformation user=new UserInformation();
-    	user.email="1";
-    	user.pwd="1";
-    	users.add(user);
-    	*/
-	    //*************************************
+		this.qas = qas;
+		this.database = database;
 	}
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-    	String type=request.getHeader("type");
-    	if(type != null && type.equals("ask"))
-    	{
-    		//ProcessAsk(request,response);
-    		processor.ProcessAsk(request, response);
-    	}
-    	else if(type != null && type.equals("signup"))
-    	{
-    		//ProcessSignUp(request,response);
-    		processor.ProcessSignUp(request, response);
-    	}
-    	else if(type != null && type.equals("login"))
-    	{
-    		//ProcessLogIn(request, response);
-    		processor.ProcessLogIn(request, response);
-    	}
-    	else if(type != null && type.equals("profile"))
-    	{
-    		//ProcessProfile(request,response);
-    		processor.ProcessLogIn(request, response);
-    	}
-    	else if(type != null && type.equals("history"))
-    	{
-    		//ProcessHistory(request,response);
-    		processor.ProcessHistory(request, response);
-    	}
-    	else if(type != null && type.equals("changepwd"))
-    	{
-    		//ProcessChangePWD(request,response);
-    		processor.ProcessChangePWD(request, response);
-    	}
-	}
-    
-    /*
-    private void ProcessAsk(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	
+	public static void ProcessAsk(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String question=request.getHeader("question");
     	String answer="";
@@ -110,10 +49,8 @@ public class WebServer extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		out.println(answer);
     }
-    */
-    
-    /*
-    private void ProcessSignUp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	
+	public static void ProcessSignUp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	UserInformation user = new UserInformation();
     	user.fname = request.getHeader("fname");
@@ -133,7 +70,17 @@ public class WebServer extends HttpServlet {
     	user.program=request.getHeader("program");
     	
     	boolean isExist=false;
-
+    	/*
+    	Iterator<UserInformation> iterator=users.iterator();
+		while(iterator.hasNext())
+		{
+			UserInformation element=iterator.next();
+			if(element.email.equals(user.email))
+			{
+				isExist=true;
+			}
+		}
+		*/
     	String sql = "SELECT * " + "FROM USERS " + "WHERE email = '" + user.email + "';";
     	ArrayList<UserInformation> users = database.selectFromUsersTable(sql);
     	if(!users.isEmpty())
@@ -161,16 +108,24 @@ public class WebServer extends HttpServlet {
 			out.print("true");
 		}
     }
-    */
-    
-    /*
-    private void ProcessLogIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	
+	public static void ProcessLogIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String email=request.getHeader("email");
     	String pwd=request.getHeader("pwd");
     	
     	boolean isVerified=false;
-    	
+    	/*
+    	Iterator<UserInformation> iterator=users.iterator();
+		while(iterator.hasNext())
+		{
+			UserInformation element=iterator.next();
+			if(element.email.equals(email) && element.pwd.equals(pwd))
+			{
+				isVerified=true;
+			}
+		}
+		*/
     	String sql = "SELECT * " + "FROM USERS " + "WHERE email = '" + email + "' AND pwd = '" + pwd + "';";
     	ArrayList<UserInformation> users = database.selectFromUsersTable(sql);
     	if(!users.isEmpty())
@@ -188,10 +143,8 @@ public class WebServer extends HttpServlet {
 			out.print("false");
 		}
     }
-    */
-    
-    /*
-    private void ProcessProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	
+	public static void ProcessProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String email=request.getHeader("email");
     	PrintWriter out=response.getWriter();
@@ -215,10 +168,8 @@ public class WebServer extends HttpServlet {
     	out.print("mgpaCOLON"+user.mgpa + "COMMA");
     	out.print("programCOLON"+user.program);
     }
-    */
     
-    /*
-    private void ProcessHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    public static void ProcessHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String email=request.getHeader("email");
     	PrintWriter out=response.getWriter();
@@ -249,10 +200,8 @@ public class WebServer extends HttpServlet {
     		}
     	}
     }
-    */
     
-    /*
-    private void ProcessChangePWD(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    public static void ProcessChangePWD(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String email=request.getHeader("email");
     	String newPWD=request.getHeader("pwd");
@@ -261,19 +210,4 @@ public class WebServer extends HttpServlet {
     	String sql = "UPDATE USERS SET pwd = '" + newPWD + "' WHERE email='" + email + "';";
     	database.update(sql);
     }
-	*/
-    
-	public void destroy()
-	{
-		// do nothing.
-	}	
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub		
-		doGet(request, response);
-	}
-
 }
