@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 public class Processor {
 	private static IQuestionAnswerSystem qas;
 	private static Database database;
@@ -29,18 +31,30 @@ public class Processor {
 		{
 			String email = request.getHeader("email");
 			String sql;
+			String newQuestion;
+			String newAnswer;
+			
+			/*
 			String[] temp = question.split("'");
 			String newQuestion = temp[0];
 			for(int i = 1; i < temp.length; i++)
 			{
 				newQuestion = newQuestion + "SINGLEQUOTE" + temp[i];
 			}
+			*/
+			
+			/*
 			temp = answer.split("'");
 			String newAnswer = temp[0];
 			for(int i = 1; i < temp.length; i++)
 			{
 				newAnswer = newAnswer + "SINGLEQUOTE" + temp[i];
 			}
+			*/
+			
+			newQuestion = StringEscapeUtils.escapeSql(question);
+			newAnswer = StringEscapeUtils.escapeSql(answer);
+			
 			sql = "INSERT INTO QATable (email, question, answer) " + 
 					"VALUES ('" + email + "', '" + newQuestion + "', '" + newAnswer + "');";
 			database.insert(sql);
@@ -53,21 +67,21 @@ public class Processor {
 	public static void ProcessSignUp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	UserInformation user = new UserInformation();
-    	user.fname = request.getHeader("fname");
-    	user.mname = request.getHeader("mname");
-    	user.lname = request.getHeader("lname");
-    	user.gender = request.getHeader("gender");
-    	user.email = request.getHeader("email");
-    	user.pwd = request.getHeader("pwd");
+    	user.fname = StringEscapeUtils.escapeSql(request.getHeader("fname"));
+    	user.mname = StringEscapeUtils.escapeSql(request.getHeader("mname"));
+    	user.lname = StringEscapeUtils.escapeSql(request.getHeader("lname"));
+    	user.gender = StringEscapeUtils.escapeSql(request.getHeader("gender"));
+    	user.email = StringEscapeUtils.escapeSql(request.getHeader("email"));
+    	user.pwd = StringEscapeUtils.escapeSql(request.getHeader("pwd"));
     	user.month = Integer.parseInt(request.getHeader("month"));
     	user.day = Integer.parseInt(request.getHeader("day"));
     	user.year = Integer.parseInt(request.getHeader("year"));
-    	user.university = request.getHeader("university");
-    	user.major = request.getHeader("major");
+    	user.university = StringEscapeUtils.escapeSql(request.getHeader("university"));
+    	user.major = StringEscapeUtils.escapeSql(request.getHeader("major"));
     	user.gpascale = Float.parseFloat(request.getHeader("gpascale"));
     	user.cgpa = Float.parseFloat(request.getHeader("cgpa"));
     	user.mgpa = Float.parseFloat(request.getHeader("mgpa"));
-    	user.program=request.getHeader("program");
+    	user.program=StringEscapeUtils.escapeSql(request.getHeader("program"));
     	
     	boolean isExist=false;
     	/*
