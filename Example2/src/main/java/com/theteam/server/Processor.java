@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import java.security.*;
 
 public class Processor {
 	private static IQuestionAnswerSystem qas;
@@ -66,13 +67,15 @@ public class Processor {
 	
 	public static void ProcessSignUp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+		
+		
     	UserInformation user = new UserInformation();
     	user.fname = StringEscapeUtils.escapeSql(request.getHeader("fname"));
     	user.mname = StringEscapeUtils.escapeSql(request.getHeader("mname"));
     	user.lname = StringEscapeUtils.escapeSql(request.getHeader("lname"));
     	user.gender = StringEscapeUtils.escapeSql(request.getHeader("gender"));
     	user.email = StringEscapeUtils.escapeSql(request.getHeader("email"));
-    	user.pwd = StringEscapeUtils.escapeSql(request.getHeader("pwd"));
+    	user.pwd = StringEscapeUtils.escapeSql(encrypt(request.getHeader("pwd")));
     	user.month = Integer.parseInt(request.getHeader("month"));
     	user.day = Integer.parseInt(request.getHeader("day"));
     	user.year = Integer.parseInt(request.getHeader("year"));
@@ -126,7 +129,7 @@ public class Processor {
 	public static void ProcessLogIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String email=StringEscapeUtils.escapeSql(request.getHeader("email"));
-    	String pwd=StringEscapeUtils.escapeSql(request.getHeader("pwd"));
+    	String pwd=StringEscapeUtils.escapeSql(encrypt(request.getHeader("pwd")));
     	
     	boolean isVerified=false;
     	/*
@@ -218,10 +221,38 @@ public class Processor {
     public static void ProcessChangePWD(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String email=StringEscapeUtils.escapeSql(request.getHeader("email"));
-    	String newPWD=StringEscapeUtils.escapeSql(request.getHeader("pwd"));
+    	String newPWD=StringEscapeUtils.escapeSql(encrypt(request.getHeader("pwd")));
     	PrintWriter out=response.getWriter();
     
     	String sql = "UPDATE USERS SET pwd = '" + newPWD + "' WHERE email='" + email + "';";
     	database.update(sql);
+    }
+    
+    private static String encrypt(String password)
+    {
+    	String generatedPassword = null;
+    	try {
+            // Create MessageDigest instance for MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            //Add password bytes to digest
+            md.update(password.getBytes());
+            //Get the hash's bytes 
+            byte[] bytes = md.digest();
+            //This bytes[] has bytes in decimal format;
+            //Convert it to hexadecimal format
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            //Get complete hashed password in hex format
+            generatedPassword = sb.toString();
+        } 
+        catch (NoSuchAlgorithmException e) 
+        {
+            e.printStackTrace();
+        }
+    	
+    	return generatedPassword;
     }
 }
