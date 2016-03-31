@@ -53,8 +53,10 @@ public class Processor {
 			}
 			*/
 			
-			newQuestion = StringEscapeUtils.escapeSql(question);
-			newAnswer = StringEscapeUtils.escapeSql(answer);
+			//newQuestion = StringEscapeUtils.escapeSql(question);
+			//newAnswer = StringEscapeUtils.escapeSql(answer);
+			newQuestion = SQLUtil.escapeString((question));
+			newAnswer = SQLUtil.escapeString((answer));
 			
 			sql = "INSERT INTO QATable (email, question, answer) " + 
 					"VALUES ('" + email + "', '" + newQuestion + "', '" + newAnswer + "');";
@@ -70,21 +72,21 @@ public class Processor {
 		
 		
     	UserInformation user = new UserInformation();
-    	user.fname = StringEscapeUtils.escapeSql(request.getHeader("fname"));
-    	user.mname = StringEscapeUtils.escapeSql(request.getHeader("mname"));
-    	user.lname = StringEscapeUtils.escapeSql(request.getHeader("lname"));
-    	user.gender = StringEscapeUtils.escapeSql(request.getHeader("gender"));
-    	user.email = StringEscapeUtils.escapeSql(request.getHeader("email"));
-    	user.pwd = StringEscapeUtils.escapeSql(encrypt(request.getHeader("pwd")));
+    	user.fname = SQLUtil.escapeString(request.getHeader("fname"));
+    	user.mname = SQLUtil.escapeString(request.getHeader("mname"));
+    	user.lname = SQLUtil.escapeString(request.getHeader("lname"));
+    	user.gender = SQLUtil.escapeString(request.getHeader("gender"));
+    	user.email = SQLUtil.escapeString(request.getHeader("email"));
+    	user.pwd = SQLUtil.escapeString(encrypt(request.getHeader("pwd")));
     	user.month = Integer.parseInt(request.getHeader("month"));
     	user.day = Integer.parseInt(request.getHeader("day"));
     	user.year = Integer.parseInt(request.getHeader("year"));
-    	user.university = StringEscapeUtils.escapeSql(request.getHeader("university"));
-    	user.major = StringEscapeUtils.escapeSql(request.getHeader("major"));
+    	user.university = SQLUtil.escapeString(request.getHeader("university"));
+    	user.major = SQLUtil.escapeString(request.getHeader("major"));
     	user.gpascale = Float.parseFloat(request.getHeader("gpascale"));
     	user.cgpa = Float.parseFloat(request.getHeader("cgpa"));
     	user.mgpa = Float.parseFloat(request.getHeader("mgpa"));
-    	user.program=StringEscapeUtils.escapeSql(request.getHeader("program"));
+    	user.program=SQLUtil.escapeString(request.getHeader("program"));
     	
     	boolean isExist=false;
     	/*
@@ -128,8 +130,8 @@ public class Processor {
 	
 	public static void ProcessLogIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	String email=StringEscapeUtils.escapeSql(request.getHeader("email"));
-    	String pwd=StringEscapeUtils.escapeSql(encrypt(request.getHeader("pwd")));
+    	String email=SQLUtil.escapeString(request.getHeader("email"));
+    	String pwd=SQLUtil.escapeString(encrypt(request.getHeader("pwd")));
     	
     	boolean isVerified=false;
     	/*
@@ -163,32 +165,32 @@ public class Processor {
 	
 	public static void ProcessProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	String email=StringEscapeUtils.escapeSql(request.getHeader("email"));
+    	String email=SQLUtil.escapeString(request.getHeader("email"));
     	PrintWriter out=response.getWriter();
     
     	String sql = "SELECT * " + "FROM USERS " + "WHERE email = '" + email + "';";
     	ArrayList<UserInformation> users = database.selectFromUsersTable(sql);
     	
     	UserInformation user = users.get(0);
-    	out.print("fnameCOLON"+user.fname + "COMMA");
-    	out.print("mnameCOLON"+user.mname + "COMMA");
-    	out.print("lnameCOLON"+user.lname + "COMMA");
+    	out.print("fnameCOLON"+SQLUtil.unescapeString(user.fname) + "COMMA");
+    	out.print("mnameCOLON"+SQLUtil.unescapeString(user.mname) + "COMMA");
+    	out.print("lnameCOLON"+SQLUtil.unescapeString(user.lname) + "COMMA");
     	//out.print("genderCOLON"+user.gender + "COMMA");
     	//out.print("emailCOLON"+user.email + "COMMA");
     	out.print("monthCOLON"+user.month + "COMMA");
     	out.print("dayCOLON"+user.day + "COMMA");
     	out.print("yearCOLON"+user.year + "COMMA");
-    	out.print("universityCOLON"+user.university + "COMMA");
-    	out.print("majorCOLON"+user.major + "COMMA");
+    	out.print("universityCOLON"+SQLUtil.unescapeString(user.university) + "COMMA");
+    	out.print("majorCOLON"+SQLUtil.unescapeString(user.major) + "COMMA");
     	out.print("gpascaleCOLON"+user.gpascale + "COMMA");
     	out.print("cgpaCOLON"+user.cgpa + "COMMA");
     	out.print("mgpaCOLON"+user.mgpa + "COMMA");
-    	out.print("programCOLON"+user.program);
+    	out.print("programCOLON"+SQLUtil.unescapeString(user.program));
     }
     
     public static void ProcessHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	String email=StringEscapeUtils.escapeSql(request.getHeader("email"));
+    	String email=SQLUtil.escapeString(request.getHeader("email"));
     	PrintWriter out=response.getWriter();
     
     	String sql = "SELECT * " + "FROM QATable " + "WHERE email = '" + email + "';";
@@ -196,6 +198,7 @@ public class Processor {
     	
     	for(int i = 0; i < qATable.size(); i++)
     	{
+    		/*
     		String question = qATable.get(i).question;
     		String[] temp = question.split("SINGLEQUOTE");
     		question = temp[0];
@@ -210,6 +213,13 @@ public class Processor {
     		{
     			answer = answer + "'" + temp[j];
     		}
+    		*/
+    		
+    		String question = qATable.get(i).question;
+    		String answer = qATable.get(i).answer;
+    		question = SQLUtil.unescapeString(question);
+    		answer = SQLUtil.unescapeString(answer);
+    		
     		out.print(question + "COLON" + answer);
     		if(i < qATable.size() - 1)
     		{
@@ -220,8 +230,8 @@ public class Processor {
     
     public static void ProcessChangePWD(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	String email=StringEscapeUtils.escapeSql(request.getHeader("email"));
-    	String newPWD=StringEscapeUtils.escapeSql(encrypt(request.getHeader("pwd")));
+    	String email=SQLUtil.escapeString(request.getHeader("email"));
+    	String newPWD=SQLUtil.escapeString(encrypt(request.getHeader("pwd")));
     	PrintWriter out=response.getWriter();
     
     	String sql = "UPDATE USERS SET pwd = '" + newPWD + "' WHERE email='" + email + "';";
