@@ -125,8 +125,8 @@ public class Processor {
 	
 	public static void ProcessLogIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	String email=request.getHeader("email");
-    	String pwd=request.getHeader("pwd");
+    	String email=StringEscapeUtils.escapeSql(request.getHeader("email"));
+    	String pwd=StringEscapeUtils.escapeSql(request.getHeader("pwd"));
     	
     	boolean isVerified=false;
     	/*
@@ -160,7 +160,7 @@ public class Processor {
 	
 	public static void ProcessProfile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	String email=request.getHeader("email");
+    	String email=StringEscapeUtils.escapeSql(request.getHeader("email"));
     	PrintWriter out=response.getWriter();
     
     	String sql = "SELECT * " + "FROM USERS " + "WHERE email = '" + email + "';";
@@ -185,7 +185,7 @@ public class Processor {
     
     public static void ProcessHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	String email=request.getHeader("email");
+    	String email=StringEscapeUtils.escapeSql(request.getHeader("email"));
     	PrintWriter out=response.getWriter();
     
     	String sql = "SELECT * " + "FROM QATable " + "WHERE email = '" + email + "';";
@@ -217,8 +217,8 @@ public class Processor {
     
     public static void ProcessChangePWD(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	String email=request.getHeader("email");
-    	String newPWD=request.getHeader("pwd");
+    	String email=StringEscapeUtils.escapeSql(request.getHeader("email"));
+    	String newPWD=StringEscapeUtils.escapeSql(request.getHeader("pwd"));
     	PrintWriter out=response.getWriter();
     
     	String sql = "UPDATE USERS SET pwd = '" + newPWD + "' WHERE email='" + email + "';";
