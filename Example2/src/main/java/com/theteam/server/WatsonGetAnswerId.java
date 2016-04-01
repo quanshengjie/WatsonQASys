@@ -29,7 +29,7 @@ public class WatsonGetAnswerId implements IAnswerIdManager
 	{
 		try {
 			
-			String urlStr = "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/668877x36-nlc-21/classify";
+			String urlStr = "https://gateway.watsonplatform.net/natural-language-classifier/api/v1/classifiers/cd6394x53-nlc-70/classify";
 			urlStr += "?text=" + URLEncoder.encode(ans, "UTF-8");
 			URL url = new URL(urlStr);
 			
