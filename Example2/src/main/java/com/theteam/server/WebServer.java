@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class WebServer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private IQuestionAnswerSystem qas = new SmartBob();
+	private IQuestionAnswerSystem qas = SmartBob.GetInstance();
 	private Database database = new Database();
 	private Processor processor = new Processor(qas, database);
        

@@ -1,71 +1,85 @@
 package com.theteam.server;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
 
 public class SmartBob implements IQuestionAnswerSystem {
 
-	private static final long TIME_TO_LIVE = 60 * 60000;
+	private static SmartBob instance = new SmartBob();
+	private static boolean inited = false;
+	
+	private static final long TIME_TO_LIVE = 60; // in unit of minutes
 	private static final String DEFAULT_ANS = "Sorry currently we cannot provide a answer to this question.";
+	private static final int CACHE_CAPACITY = 10000;
 	private IQuestionAnswerSystem watson = new Watson();
 	
-	private HashMap<String, AnsPair> cheatSheet;
+	private static LoadingCache<String, String> cheatSheet;
+	
+	public static SmartBob GetInstance()
+	{
+		return instance;
+	}
+	
+	private SmartBob()	{	}
+	
 	public void Init() {
-		watson.Init();
-		cheatSheet = new HashMap<String, AnsPair>();
+		if(!inited)
+		{
+			watson.Init();
+			
+			// build cache
+			int numProcessores = Runtime.getRuntime().availableProcessors();
+			CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder().concurrencyLevel(numProcessores * 2);
+		    if (CACHE_CAPACITY > 0) {
+		        cacheBuilder.maximumSize(CACHE_CAPACITY);
+		    }
+		    if(TIME_TO_LIVE > 0)
+		    {
+		    	cacheBuilder.expireAfterWrite(TIME_TO_LIVE, TimeUnit.MINUTES);
+		    }
+		    CacheLoader<String, String> cheatSheetCacheLoader = new CacheLoader<String, String>() {
+		        @Override
+		        public String load(String question) {
+		        	String answer = null;
+		        	try
+					{
+						answer = watson.GetAnswer(question);
+						System.out.println("Store ans to question "+ question);
+					}
+					catch (Exception e)
+					{
+						System.out.println("Watson fail to give answer");
+					}
+		        	if(answer == null)
+		    		{
+		    			answer = DEFAULT_ANS;
+		    		}
+		        	return answer;
+		        }
+		    };
+		    cheatSheet = cacheBuilder.build(cheatSheetCacheLoader);
+			inited = true;
+		}
 	}
 
 	public String GetAnswer(String question) {
 		String answer = null;
-		long curTime = System.currentTimeMillis();
-		if(cheatSheet.containsKey(question))
-		{
-			System.out.println("Find the ans to \""+ question + "\" in cheatsheet");
-			AnsPair cheatAnsPair = cheatSheet.get(question);
-			if(cheatAnsPair.GetExpiration() >= curTime)
-			{
-				answer = cheatAnsPair.GetAns();
-			}
-			else
-			{
-				System.out.println("Ans expired. Expiration is " + cheatAnsPair.GetExpiration() 
-																 + " but now is "+curTime );
-			}
+		try {
+			answer = cheatSheet.get(question);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
 		}
-		
-		if(answer == null)
-		{
-			try
-			{
-				answer = watson.GetAnswer(question);
-				AnsPair newCheatAnsPair = new AnsPair(answer, curTime+TIME_TO_LIVE);
-				cheatSheet.put(question, newCheatAnsPair);
-				System.out.println("Store ans to question "+ question + "expire at " + (curTime+TIME_TO_LIVE));
-			}
-			catch (Exception e)
-			{
-				System.out.println("At time " + curTime + " trying to access Watson but got a exception");
-			}
-		}
-		
 		if(answer == null)
 		{
 			answer = DEFAULT_ANS;
 		}
 		return answer;
-	}
-	
-	private class AnsPair
-	{
-		private String ans;
-		private long expiration;
-		public AnsPair(String ans, long expiration)
-		{
-			this.ans = ans;
-			this.expiration = expiration;
-		}
-		
-		String GetAns()	{ return this.ans; }
-		long GetExpiration()	{	return this.expiration;	}
 	}
 
 }
