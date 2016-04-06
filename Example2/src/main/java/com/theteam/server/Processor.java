@@ -77,7 +77,7 @@ public class Processor {
     	user.lname = SQLUtil.escapeString(request.getHeader("lname"));
     	user.gender = SQLUtil.escapeString(request.getHeader("gender"));
     	user.email = SQLUtil.escapeString(request.getHeader("email"));
-    	user.pwd = SQLUtil.escapeString(encrypt(request.getHeader("pwd")));
+    	user.pwd = SQLUtil.escapeString(request.getHeader("pwd"));
     	user.month = Integer.parseInt(request.getHeader("month"));
     	user.day = Integer.parseInt(request.getHeader("day"));
     	user.year = Integer.parseInt(request.getHeader("year"));
@@ -131,7 +131,7 @@ public class Processor {
 	public static void ProcessLogIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String email=SQLUtil.escapeString(request.getHeader("email"));
-    	String pwd=SQLUtil.escapeString(encrypt(request.getHeader("pwd")));
+    	String pwd=SQLUtil.escapeString(request.getHeader("pwd"));
     	
     	boolean isVerified=false;
     	/*
@@ -231,13 +231,14 @@ public class Processor {
     public static void ProcessChangePWD(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
     	String email=SQLUtil.escapeString(request.getHeader("email"));
-    	String newPWD=SQLUtil.escapeString(encrypt(request.getHeader("pwd")));
+    	String newPWD=SQLUtil.escapeString(request.getHeader("pwd"));
     	PrintWriter out=response.getWriter();
     
     	String sql = "UPDATE USERS SET pwd = '" + newPWD + "' WHERE email='" + email + "';";
     	database.update(sql);
     }
     
+    /*
     private static String encrypt(String password)
     {
     	String generatedPassword = null;
@@ -265,4 +266,5 @@ public class Processor {
     	
     	return generatedPassword;
     }
+    */
 }
