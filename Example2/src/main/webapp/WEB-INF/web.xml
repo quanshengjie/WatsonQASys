@@ -24,6 +24,12 @@
 		<servlet-class>com.theteam.server.WatsonMonitor</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<servlet>
+		<servlet-name>DumpMissingQuestions</servlet-name>
+		<display-name>DumpMissingQuestions</display-name>
+		<description>Dump the list of missing questions recorded</description>
+		<servlet-class>com.theteam.server.DumpMissingQuestions</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>WebServer</servlet-name>
@@ -32,5 +38,9 @@
 	<servlet-mapping>
 		<servlet-name>LoginServer</servlet-name>
 		<url-pattern>/LoginServer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DumpMissingQuestions</servlet-name>
+		<url-pattern>/DumpMissingQuestions</url-pattern>
 	</servlet-mapping>
 </web-app>

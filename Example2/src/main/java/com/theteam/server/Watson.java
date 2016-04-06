@@ -27,6 +27,7 @@ public class Watson implements IQuestionAnswerSystem
 	private String uploaderPassword = "UspeKDrB";
 	private IAnswerIdManager ansToId = new WatsonGetAnswerId();
 	private IAnswerURLManager idToURL = new AnswerURLManagerLocalFile();
+	private IMissingQuestionsRecorder questionRecorder = new RecordMissingQuestionToMongoDB();
 	private final int NORMAL_ANS_HTML_CRITICAL_LENGTH = 1024;
 	
 	public Watson()
@@ -199,6 +200,11 @@ public class Watson implements IQuestionAnswerSystem
 		{		
 			ans = WrapeDocumentFragmentToHTML(html, parseResult.get(1));
 			System.out.println("Return document fragment of ans: " + parseResult.get(0));
+		}
+		String confidence = parseResult.get(2);
+		if(Double.parseDouble(confidence) < 0.5)
+		{
+			questionRecorder.AddMissingQuestion(question, confidence);
 		}
 		return ans;
 	}

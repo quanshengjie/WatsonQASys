@@ -74,6 +74,16 @@
 		<artifactId>guava</artifactId>
 		<version>19.0</version>
 	</dependency>
+    <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongodb-driver</artifactId>
+        <version>3.0.4</version>
+    </dependency>
+    <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>bson</artifactId>
+        <version>3.0.4</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>Example2</finalName>

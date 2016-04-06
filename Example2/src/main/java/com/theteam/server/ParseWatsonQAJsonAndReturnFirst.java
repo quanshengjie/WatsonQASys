@@ -10,7 +10,8 @@ public class ParseWatsonQAJsonAndReturnFirst
 	 * @param jsonLine the json in String returned by Watson QA
 	 * @return
 	 * 		The first List with index 0 contain the first in String, 
-	 * 		index 1 contain its document ID in Watson
+	 * 		index 1 contain its document ID in Watson, index 2 contain
+	 * 		its confidence value
 	 * 		If parse failed, the index 0 is empty string, index 1 is "-1"
 	 */
 	public static List<String> parse(String jsonLine)
@@ -32,6 +33,8 @@ public class ParseWatsonQAJsonAndReturnFirst
 	    String document = jobject.get("document").getAsString();
 	    String[] documentUrlSplited = document.split("/question/document/", 2);
 	    result.add(1, documentUrlSplited[documentUrlSplited.length-1]);
+	    String confidence = jobject.get("value").getAsString();
+	    result.add(2, confidence);
 	    return result;
 	}
 }
