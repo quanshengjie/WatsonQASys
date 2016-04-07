@@ -30,6 +30,12 @@
 		<description>Dump the list of missing questions recorded</description>
 		<servlet-class>com.theteam.server.DumpMissingQuestions</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>WatsonMonitorDemo</servlet-name>
+		<display-name>WatsonMonitorDemo</display-name>
+		<description>Demo of Watson Monitor, sending fake status change email</description>
+		<servlet-class>com.theteam.server.WatsonMonitorDemo</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>WebServer</servlet-name>
@@ -42,5 +48,9 @@
 	<servlet-mapping>
 		<servlet-name>DumpMissingQuestions</servlet-name>
 		<url-pattern>/DumpMissingQuestions</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>WatsonMonitorDemo</servlet-name>
+		<url-pattern>/WatsonMonitorDemo</url-pattern>
 	</servlet-mapping>
 </web-app>
