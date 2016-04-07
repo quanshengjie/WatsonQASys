@@ -76,7 +76,8 @@ document.getElementById("signup").addEventListener('click',function(event)
 			xmlobj.setRequestHeader("gender","notknow");
 		}
 		xmlobj.setRequestHeader("email",email.value);
-		xmlobj.setRequestHeader("pwd",pwd.value);
+		hashpwd = md5(pwd.value);
+		xmlobj.setRequestHeader("pwd",hashpwd);
 		xmlobj.setRequestHeader("month",month.value);
 		xmlobj.setRequestHeader("day",day.value);
 		xmlobj.setRequestHeader("year",year.value);

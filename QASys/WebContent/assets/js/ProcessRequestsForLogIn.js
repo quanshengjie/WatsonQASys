@@ -27,7 +27,7 @@ document.getElementById("login").addEventListener('click',function(event)
 	xmlobj.onreadystatechange=GetFeedback;
 	xmlobj.setRequestHeader("type","login");
 	xmlobj.setRequestHeader("email",email.value);
-	xmlobj.setRequestHeader("pwd",pwd.value);
+	xmlobj.setRequestHeader("pwd",md5(pwd.value));
 	xmlobj.send(null);
 });
 
