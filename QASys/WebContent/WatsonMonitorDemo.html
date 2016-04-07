@@ -1,0 +1,42 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+    <body> 
+    	<br> <br> <br> <br>
+		<button type="button" onclick="SendWatsonDown(); return -1;">Down</button>
+		<br> <br> <br> <br>
+		<button type="button" onclick="SendWatsonUp(); return -1;">Up</button>
+    </body>     
+<script>
+function SendWatsonDown()
+{
+	var xmlobj;
+	if(window.ActiveXObject)
+	{
+		xmlobj=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	else
+	{
+		xmlobj=new XMLHttpRequest();
+	}
+	xmlobj.open("POST","../Example2/WatsonMonitorDemo",true);
+	xmlobj.setRequestHeader("type","down");
+	xmlobj.send(null);
+}
+
+function SendWatsonUp()
+{
+	var xmlobj;
+	if(window.ActiveXObject)
+	{
+		xmlobj=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	else
+	{
+		xmlobj=new XMLHttpRequest();
+	}
+	xmlobj.open("POST","../Example2/WatsonMonitorDemo",true);
+	xmlobj.setRequestHeader("type","up");
+	xmlobj.send(null);
+}
+</script>
+</html>
