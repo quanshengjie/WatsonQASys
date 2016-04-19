@@ -24,15 +24,15 @@ public class WatsonMonitorDemo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String type=request.getHeader("type");
-    	if(type != null && type.equals("down"))
-    	{
-    		NotificationMailSender.Instance.simpleSendDown();
-    	}
-    	else if(type != null && type.equals("up"))
-    	{
-    		NotificationMailSender.Instance.simpleSendUp();
-    	}
+//		String type=request.getHeader("type");
+//    	if(type != null && type.equals("down"))
+//    	{
+//    		NotificationMailSender.Instance.simpleSendDown();
+//    	}
+//    	else if(type != null && type.equals("up"))
+//    	{
+//    		NotificationMailSender.Instance.simpleSendUp();
+//    	}
 	}
 
 	/**

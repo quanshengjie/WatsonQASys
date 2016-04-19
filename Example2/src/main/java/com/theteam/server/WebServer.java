@@ -49,7 +49,7 @@ public class WebServer extends HttpServlet {
     	else if(type != null && type.equals("profile"))
     	{
     		//ProcessProfile(request,response);
-    		processor.ProcessLogIn(request, response);
+    		processor.ProcessProfile(request, response);
     	}
     	else if(type != null && type.equals("history"))
     	{
