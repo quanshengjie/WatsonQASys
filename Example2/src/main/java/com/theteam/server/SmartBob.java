@@ -1,6 +1,8 @@
 package com.theteam.server;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +22,7 @@ public class SmartBob implements IQuestionAnswerSystem {
 	private IQuestionAnswerSystem watson = new Watson();
 	
 	private static LoadingCache<String, String> cheatSheet;
+	private static ConcurrentMap<String, String> preSetAnsTable;
 	
 	public static SmartBob GetInstance()
 	{
@@ -64,14 +67,24 @@ public class SmartBob implements IQuestionAnswerSystem {
 		        }
 		    };
 		    cheatSheet = cacheBuilder.build(cheatSheetCacheLoader);
+		    preSetAnsTable = new ConcurrentHashMap<String, String>();
 			inited = true;
+			
+			preSetAnsTable.put("Show me a video of OSU", "<iframe width=\"100%\" height=\"600\" src=\"https://www.youtube.com/embed/dNeKD2570g4\" frameborder=\"0\" allowfullscreen></iframe>");
 		}
 	}
 
 	public String GetAnswer(String question) {
 		String answer = null;
 		try {
-			answer = cheatSheet.get(question);
+			if(preSetAnsTable.containsKey(question))
+			{
+				answer = preSetAnsTable.get(question);
+			}
+			else
+			{
+				answer = cheatSheet.get(question);
+			}
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
