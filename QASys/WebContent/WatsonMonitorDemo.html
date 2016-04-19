@@ -21,6 +21,7 @@ function SendWatsonDown()
 	xmlobj.open("POST","../Example2/WatsonMonitorDemo",true);
 	xmlobj.setRequestHeader("type","down");
 	xmlobj.send(null);
+	alert('Sent Down');
 }
 
 function SendWatsonUp()
@@ -37,6 +38,7 @@ function SendWatsonUp()
 	xmlobj.open("POST","../Example2/WatsonMonitorDemo",true);
 	xmlobj.setRequestHeader("type","up");
 	xmlobj.send(null);
+	alert('Sent Up');
 }
 </script>
 </html>

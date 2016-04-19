@@ -2,6 +2,7 @@ var xmlobj;
 var question;
 var hasUser;
 var email;
+var requested = false;
 
 function CreateXMLHttpRequest()
 {
@@ -30,10 +31,12 @@ function GetAnswer()
 		{
 			scrollToInputFormTop();
 		}
+		requested = false;
 	}
 	else if(xmlobj.status != 200)
 	{
 		alert("Server error: " + xmlobj.status);
+		requested = false;
 	}
 }
 
@@ -41,29 +44,33 @@ document.getElementById("ask").addEventListener('click',function(event)
 {
 	event.stopPropagation();
 	event.preventDefault();
-	question=document.getElementById("question");
-	var temp = question.value.trim();
-	if(temp != "")
+	if(!requested)
 	{
-		var answer = document.getElementById("main_answer_div")
-		answer.innerHTML = "";
-		startProgressBar();
-
-		CreateXMLHttpRequest();
-		xmlobj.open("POST","../Example2/WebServer",true);
-		xmlobj.onreadystatechange=GetAnswer;
-		xmlobj.setRequestHeader("type","ask");
-		xmlobj.setRequestHeader("question",question.value.trim());
-		if(hasUser)
-		{	
-			xmlobj.setRequestHeader("hasUser", "true");
-			xmlobj.setRequestHeader("email", email);
-		}
-		else
+		question=document.getElementById("question");
+		var temp = question.value.trim();
+		if(temp != "")
 		{
-			xmlobj.setRequestHeader("hasUser", "false");
+			var answer = document.getElementById("main_answer_div")
+			answer.innerHTML = "";
+			startProgressBar();
+	
+			CreateXMLHttpRequest();
+			xmlobj.open("POST","../Example2/WebServer",true);
+			xmlobj.onreadystatechange=GetAnswer;
+			xmlobj.setRequestHeader("type","ask");
+			xmlobj.setRequestHeader("question",question.value.trim());
+			if(hasUser)
+			{	
+				xmlobj.setRequestHeader("hasUser", "true");
+				xmlobj.setRequestHeader("email", email);
+			}
+			else
+			{
+				xmlobj.setRequestHeader("hasUser", "false");
+			}
+			xmlobj.send(null);
 		}
-		xmlobj.send(null);
+		requested = true;
 	}
 });
 

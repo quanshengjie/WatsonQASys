@@ -18,7 +18,7 @@ document.getElementById("login").addEventListener('click',function(event)
 {
 	event.stopPropagation();
 	event.preventDefault();
-	
+
 	email=document.getElementById("email");
 	pwd=document.getElementById("pwd");
 
@@ -29,6 +29,7 @@ document.getElementById("login").addEventListener('click',function(event)
 	xmlobj.setRequestHeader("email",email.value);
 	xmlobj.setRequestHeader("pwd",md5(pwd.value));
 	xmlobj.send(null);
+	
 });
 
 function GetFeedback()
