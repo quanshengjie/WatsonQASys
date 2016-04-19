@@ -17,9 +17,22 @@ function CreateXMLHttpRequest()
 
 function Load()
 {
-	var url = location.href;
-	var temp = url.split("?")[1];
-	email = temp.split("=")[1];
+	var url=location.href;
+	var temp=url.split("?")[1];
+	if(temp!=null)
+	{
+		hasUser=true;
+		email=temp.split("=")[1];
+	}
+	else
+	{
+		hasUser=false;
+	}
+	
+	if(hasUser==true)
+	{
+		document.getElementById("username").innerHTML=email;
+	}
 
 	CreateXMLHttpRequest();
 	xmlobj.open("POST","../Example2/WebServer",true);
